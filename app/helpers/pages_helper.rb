@@ -11,7 +11,6 @@ module PagesHelper
         list << image_tag("portfolio/rails/mpifix.com")
         list << image_tag("portfolio/rails/olery.com")
         list << image_tag("portfolio/rails/underthesite.com")
-        
       when "javascript"
         list = []
       when "php"
