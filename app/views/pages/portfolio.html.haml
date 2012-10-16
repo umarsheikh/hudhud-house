@@ -1,0 +1,16 @@
+#myCarousel.carousel.slide
+  / Carousel items
+  .carousel-inner
+    .active.item
+      = portfolio_first_for
+    = portfolio_for.each do |item|
+      .item
+        = item
+      
+  / Carousel nav
+  / %a.carousel-control.left{"data-slide" => "prev", :href => "#myCarousel"} ‹
+  / doesnt go well with images of different sizes
+  / %a.carousel-control.right{"data-slide" => "next", :href => "#myCarousel"} ›
+
+:javascript
+  $('.carousel').carousel()

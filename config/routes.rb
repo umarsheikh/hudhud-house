@@ -1,5 +1,6 @@
 HudhudHouse::Application.routes.draw do
   get "pages/main"
+  match "pages/portfolio/:id" => "pages#portfolio", :as => :portfolio
   root :to => "pages#main"
   # The priority is based upon order of creation:
   # first created -> highest priority.
