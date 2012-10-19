@@ -1,4 +1,6 @@
 HudhudHouse::Application.routes.draw do
+  get "location/where_we_are", :as => :our_location
+
   get "pages/main"
   match "pages/portfolio/:id" => "pages#portfolio", :as => :portfolio
   root :to => "pages#main"

@@ -1,2 +1,7 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+imagemagick command line:
+convert world-map.jpeg -resize '70x70^' -gravity center -crop '70x70+0+0' -quantize GRAY -colors 256 -contrast mystamp.png
+
+
