@@ -2,6 +2,7 @@ HudhudHouse::Application.routes.draw do
   get "location/where_we_are", :as => :our_location
 
   get "pages/main"
+  match "mongo-rails-backbone-setup" => 	"pages#mongo_rails_backbone_setup", :as => :mongo_rails_backbone_setup
   match "pages/portfolio/:id" => "pages#portfolio", :as => :portfolio
   root :to => "pages#main"
   # The priority is based upon order of creation:

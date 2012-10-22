@@ -1,0 +1,67 @@
+%p
+  First, the idea is to learn the basics of creating a simple and viable application that uses both
+  %br
+  mongo and backbone. It is in order to gain expertise in both to a minimum viable level.
+  %br
+  The application should be complicated enough that it really can serve as a basis for further
+  %br
+  building on top of it.
+  %br
+%p
+  In order to learn mongo, as a base, what is needed is:
+  %ol
+    %li
+      A single table, like Students, and the ability to CRUD students.
+    %li
+      Another table, like Project, so that we can have a one-many association between Students and 
+      %br
+      Projects. The idea is to then be able to CRUD projects, so that we can have a dependent drop-down.
+      %br
+      Doing this gives us the ability to save data that updates two separate models
+    %li
+      A table, like Teacher, and a table like Classes, so that a Student can have a many-many association
+      %br
+      between itself and Teachers, with Classes being the join-model.
+    %li
+      A Table, like Attendance. This is primarily because not all column types are simple strings or numbers,
+      %br
+      Some are more complicated, and in order to learn, we need to create tables with fields of
+      different types, like Attendance can actually be a Hash. This way, we might be forced to not 
+      just use form_for
+      %br
+      helper, but also form_tag helper, so that we learn to create slightly more involved forms.
+%p
+  Typically, when we use a more traditional database like mysql, then the daily bread-butter apps
+  %br
+  involve creating three types of associations, and fields that store Hashes, or are serialized etc.
+  %br
+  So in order to learn mongo db, we should be able to do all the familiar steps with ease. The above 
+  %br
+  steps can serve to do all these operations on mongo db, and hence we can be familiar with mongo after that.
+%p
+  Of course, if the only purpose of mongo was to do relational tasks with ease, then its value is
+  %br
+  lessened, so there is another set of bread-butter tasks that we typically do with them. We should
+  %br
+  add those when we learn more about them!
+  
+%p
+  The task of creating a backbone application can simply also be broken as above. We can implement all the above models in rails, then implement them in backbone. At the end, we will have succeeded in 
+  backbonizing simple objects, like Students, but also related objects, like Attendance. This will
+  diverge with the bread-butter apps on the net, which all create a ToDo app. We will use as a basis
+  the same todo apps, but implement them on the above models.
+  
+%h2
+  Steps to accomplish
+%p
+  The really simple steps will likely be skipped, like bundle install, remove public/index.html etc.
+  
+%h3
+  Skeleton
+%ol
+  %li
+    rails new hudhud-bomo -O # to skip active record
+
+%p
+  At this point, I learnt that mongodb is one thing, and a Object Mapper is another. Then in object mappers we are spoilt for choice, and mongo-mapper and mongoid seem to be two popular ones. I am inclined to use mongo-mapper for now, but am not sure. But at this point, the next task is to read up on mongodb, mongo-mapper and mongoid, before deciding which one to got forward with, and before continuing...
+  
