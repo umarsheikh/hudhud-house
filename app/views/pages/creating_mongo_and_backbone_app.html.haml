@@ -75,28 +75,7 @@
   %li
     gem 'mongo_mapper' in Gemfile in rails project created without active_record (--skip-activerecord or -O)
   %li
-    copy the following to the config/initializers/mongo.rb file (from http://www.mongodb.org/display/DOCS/Rails+3+-+Getting+Started):
-    %pre
-      MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
-      MongoMapper.database = "#hudhudbono-#{Rails.env}"
-  %li
-    copy the following to lib/tasks/mongo.rake (from http://www.mongodb.org/display/DOCS/Rails+3+-+Getting+Started)
-    %pre
-      namespace :db do
-      namespace :test do
-      task :prepare do
-      \#Stub out for MongoDB
-      end
-      end
-      end
-  %li
-    bundle exec rails generate mongo_mapper:config # generates the config/mogo.yml file
-  %li
-    touch confing/database.yml # may not be needed, will figure out later
-  %li
-    rake db:create; rake db:test:prepare; rake test is failing need to figure this out
-  %li
-    rails generate scaffold user name:string email:string
+    To be continued...
   %li
     at this point, getting stuck on "undefined method `collection' for nil:NilClass" so abandoing and moving to rails with mongoid  first, then return to it later.
 %p
@@ -175,6 +154,3 @@
   %li
     rails new hudhud-bomo -O # to skip active record
 
-%p
-  At this point, I learnt that mongodb is one thing, and a Object Mapper is another. Then in object mappers we are spoilt for choice, and mongo-mapper and mongoid seem to be two popular ones. I am inclined to use mongo-mapper for now, but am not sure. But at this point, the next task is to read up on mongodb, mongo-mapper and mongoid, before deciding which one to got forward with, and before continuing...
-  
