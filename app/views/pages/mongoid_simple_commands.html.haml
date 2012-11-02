@@ -1,0 +1,34 @@
+:css
+  .inner {margin-left: 2%;}
+%div
+  As a base, use the following:
+  %div.inner
+    class User
+    %div.inner
+      include Mongoid::Document
+      %br
+      field :username, type: String
+      %br
+      field :email, type: String
+      %br
+      field :age, type: Integer
+      %br
+    end
+
+%h3
+  Add column
+%h3
+  Remove column
+%h3
+  Change column type
+%h3
+  Drop table
+%h3
+  Add index
+%h3
+  Remove index
+%h3
+  Drop all records
+%h3
+  change all names to upcase
+

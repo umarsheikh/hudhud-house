@@ -52,6 +52,119 @@
   the same todo apps, but implement them on the above models.
   
 %h2
+  Whati s mongo
+%p
+  Schemaless database.
+%h2
+  Creating a simple mongo+mongomapper app
+%p  
+  When you install mongodb by sudo apt-get install mongodb-10gen, then by default mongodb runs as the mongodb user. it doesnt have a password unless u add it. so just a simple installation also creaets a user account. The repair steps if it fails to start are the following:
+%ul
+  %li
+    sudo rm /var/lib/mongodb/mongod.lock
+  %li
+    sudo -u mongodb mongod -f /etc/mongodb.conf --repair
+  %li
+    sudo start mongodb
+  %li
+    sudo status mongodb
+
+%ol
+  %li
+    sudo apt-get install mongodb-10gen
+  %li
+    gem 'mongo_mapper' in Gemfile in rails project created without active_record (--skip-activerecord or -O)
+  %li
+    copy the following to the config/initializers/mongo.rb file (from http://www.mongodb.org/display/DOCS/Rails+3+-+Getting+Started):
+    %pre
+      MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
+      MongoMapper.database = "#hudhudbono-#{Rails.env}"
+  %li
+    copy the following to lib/tasks/mongo.rake (from http://www.mongodb.org/display/DOCS/Rails+3+-+Getting+Started)
+    %pre
+      namespace :db do
+      namespace :test do
+      task :prepare do
+      \#Stub out for MongoDB
+      end
+      end
+      end
+  %li
+    bundle exec rails generate mongo_mapper:config # generates the config/mogo.yml file
+  %li
+    touch confing/database.yml # may not be needed, will figure out later
+  %li
+    rake db:create; rake db:test:prepare; rake test is failing need to figure this out
+  %li
+    rails generate scaffold user name:string email:string
+  %li
+    at this point, getting stuck on "undefined method `collection' for nil:NilClass" so abandoing and moving to rails with mongoid  first, then return to it later.
+%p
+  This looks cool: http://railstips.org/blog/archives/2009/12/18/why-i-think-mongo-is-to-databases-what-rails-was-to-frameworks/
+%h2
+  Creating a simple mongo+mongoid app
+%h3
+  Reference: http://www.djkiger.com/?p=16
+%p
+  mongoid 3 only supports ruby 1.9.3, so if u use rvm, make sure you specify correct version.
+%ol
+  %li
+    rails new name -O -T
+  
+  %li
+    gem 'mongoid'
+  %li
+
+    group :development, :test do
+    %br
+    &nbsp;gem 'factory_girl_rails'                        # use factories instead of fixtures
+    %br
+    &nbsp;gem 'faker'                                     # easily create fake data for tests
+    %br
+    &nbsp;gem 'rspec-rails'                               # test framework
+    %br
+    &nbsp;gem "cucumber-rails", "~> 1.0", require: false  # integration test framework
+    %br
+    &nbsp;gem 'simplecov'                                 # test coverage report
+    %br
+    &nbsp;gem 'json_spec'                                 # easier testing of JSON
+    %br
+    
+    &nbsp;gem 'database_cleaner'                          # manage DB between tests
+    %br
+    &nbsp;gem 'mongoid-rspec'                             # rspec matchers for mongoid
+    %br
+    end
+  %li
+    rails g mongoid:config # and change some config
+  %li
+    rails g rspec:install # and some changes
+  %li
+    rails g cucumber:install --capybara --rspec --skip-database # and then some changes, add new files etc
+  %li
+    rails generate scaffold user username:string email:string age:integer
+  %li
+    at this point, if u fire up the app and go to users, it works! you can CRUD users at this point!
+
+%p
+  At this point, the code is setup to make rails work with mongoid, as well as have a testing framework. In essence, it is as simple as adding a gem mongoid to Gemfile, and making sure u generated ur rails app without active record. and then u can start working using scaffold generator. 
+%p
+  It is a good idea to read mongoid source code for some time, read one or two pages related to mongoid, fire up rails console, and practise a bit, and add a few validations to get familiar with it. also, add a test to test validations.
+  %br
+  Next, we can add backbone, and move functionality of CRUDding users to backbone.    
+  %br
+  Yet another idea is that now is the time, to add a 1-1, 1-M, M-N relationship before exploring
+  %br
+  backbone integration.
+%h4
+  Source code exploration
+%ul
+  %li
+    look at the origin/lib/origin/forwardable file's method __forward__ with module_eval and class_eval in it.
+    
+%h2
+  Creating a simple backbone app with mongo in the backend
+%h2
   Steps to accomplish
 %p
   The really simple steps will likely be skipped, like bundle install, remove public/index.html etc.
