@@ -5,6 +5,9 @@ HudhudHouse::Application.routes.draw do
   match "mongo-rails-backbone-setup" => 	"pages#mongo_rails_backbone_setup", :as => :mongo_rails_backbone_setup
   match "pages/portfolio/:id" => "pages#portfolio", :as => :portfolio
   root :to => "pages#main"
+  match "pages/get_listing" => "pages#get_listing", :as => :get_listing
+  match "blog/:id" => "pages#blog", :as => :blog
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,0 +1,5 @@
+%h3
+  All blogs in no particular order:
+%ol
+  - @blogs.each do |blog|
+    %li= link_to(blog.titleize, blog_path(blog))

@@ -20,6 +20,13 @@ module PagesHelper
     end
     list
   end
+  def blog_ids
+    %W[
+    postgres_setup
+    mongoid_simple_commands
+    salesforce_app
+    ]
+  end
   def portfolio_first_for
     str = ""
     case @type

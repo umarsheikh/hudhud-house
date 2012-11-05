@@ -31,4 +31,18 @@
     back to installation instruction. I had earlier set up postgres user account for umar apparently, so if the db file, i used user umar and it started working! so for heroku apps, use user umar!
     
     
-  
+%h3
+  Some psql tasks
+%ul
+  %li
+    psql
+    %note
+      First, my user account, and my db account has same name, so this avoids the need to set a different user for db (which means a command option can be skipped) further, i have a db created with the same user account, so i can simply execute psql and it works. But typically, what happens is that you need to tell psql which db user to log in as, and which db to connect to. without arguments, it tries to log in with db user same as the current user, and the same db, so if they are not created, then psql fails. for me, thsi step works, so i am on the next step.
+  %li
+    this is a wonderful resource: http://www.postgresql.org/docs/8.0/static/tutorial-accessdb.html especially look from create db onwards, user account and password etc problems are explained nicely
+  %li
+    \q for quit, and \? for help
+  %li
+    psql dbname, and interact with it, or "rails db" does the same as well
+  %li 
+    \h lists sql commands, \? lists all commands, and \h select lists help for select command
