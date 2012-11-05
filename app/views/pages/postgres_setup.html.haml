@@ -1,0 +1,34 @@
+%h2 Set up postgres on ubuntu, followed by a Rails app using postgres database
+
+%ul
+  %li
+    sudo apt-get remove postgresql postgresql-8.4
+  %li
+    sudo -u postgres psql postgres
+    %br
+    \password # and enter a new password
+    %br
+    also read http://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
+  %li
+    .optional
+      sudo su - postgres
+  %li
+    .optional
+      psql template1 < /usr/share/postgresql/8.4/contrib/adminpack.sql
+  %li
+    if you uninstalled and then installed postgres, then if you have the pg gem, u need to uninstall and reinstall it again so that it builds with the correct installed version
+  %li
+    for rails, u can use the same user that pg created. this is the database user, not the system user.
+    for verification, check http://railscasts.com/episodes/342-migrating-to-postgresql
+  %li
+    bundle exec rails new hudhud-pgdb -d postgresql
+    
+  %li
+    createdb umar
+  %li
+    psql # now i can connect to the shell, since i am logged in as user umar and it connects to db umar.
+  %li
+    back to installation instruction. I had earlier set up postgres user account for umar apparently, so if the db file, i used user umar and it started working! so for heroku apps, use user umar!
+    
+    
+  
