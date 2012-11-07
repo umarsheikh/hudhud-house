@@ -1,0 +1,34 @@
+from http://guides.rubyonrails.org/asset_pipeline.html
+
+from http://railscasts.com/episodes/279-understanding-the-asset-pipeline
+u already have app/assets/javascripts/application.js, if u type in /assets/application.js you get the whole javascript in your app
+also, if u have greetings.txt at app/assets/javascripts/greetings.txt, if u type in assets/greetings.txt, you get the whole file as well
+also, if u put the greetings.txt anywhere in app/assets/javascripts/ or app/assets/images/ or app/assets/stylesheets, it can be accessed through the same /assets/greetings.txt
+also, if u put it in app/assets/anything/greetings.txt, then after restarting app, so that it adds anything to its load path, it will be still accessible at the same url.
+similarly, lib/assets are just as accessible, same true for vendor directory as well
+type is Rails.application.config.assets.paths, u will get the asset paths, there are many of them!
+then type: 'y _', this will yamlize the output of the last command
+as we have jquery-rails, which has a vendor/assets/ folder with the jquery.js file there, and Rails.application.config.assets.paths also include the path to this folder, so /assets/jquery.js serves the jquery file as well
+
+the application.js file has significant comments, which are managed internally by sprockets. the sprockets looks at each file, compiles it, before it includes the file which has the manifest.
+in this file, a line like: "//= require jquery" works, since jquery.js in the jquery-rails gem has its path added to the Rails.application.config.assets.paths. 
+"//= require_tree ." will include all files in this directory as well as subdirectories
+also, /?debug_assets=1 will show each file separately instead of just showing application.js in the source code if you inspect html source, probably it works like that in development already in current rails 3.2 version.
+waht if u want to exclude app/assets/javascripts/admin/file.js from //= require_tree . ?
+//= require_directory . will just include js files in the curr directory, not subdirectories, this is one solution.
+another is to move all js files in the app/assets/javascripts/public directory, and then do "//= require_tree ./public"
+
+another thing that asset pipeline does for us is preprocessing
+change greeting.txt to greeting.txt.erb, which means i can use erb inside assets!
+Hello world <%= 1 + 1 %> and it renders right!
+this is basically how sass and coffeescript work, use the scss extension for sass, you could even chain the preprocessors, so something.scss.erb will run through erb first, then go through sass.
+this is all handled using the tilt gem, so can check out source code of sprockets and tilt gems
+rails server -e production starts your rails server in production mode
+now u will see that application-34wfrqwfq5r34fasf.js in the source code, which works much better for caching purposes than the query string of yore
+rake assets:precompile will make them in the public directory, from where nginx or apache can serve them fast. 
+
+from http://coderberry.me/blog/2012/04/24/asset-pipeline-for-dummies/
+
+from http://blog.flowdock.com/2011/06/14/rails-3-1-asset-pipeline-in-the-real-world/
+
+
