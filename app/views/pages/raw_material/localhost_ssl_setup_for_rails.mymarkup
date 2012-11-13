@@ -1,0 +1,49 @@
+
+from http://blog.readypulse.com/2012/01/19/setup-webrick-to-serve-ssl-https-as-well-as-non-ssl-http-traffic-side-by-side/
+
+1 openssl req -new > tstmedia.cert.csr
+2 passphrase password, country name pk, state punjab, city lahore, org name tstmedia, unit name developer, common name umar, email my gmail, challenge password password, the above generates two files
+3 openssl rsa -in privkey.pem -out tstmedia.cert.key
+4 openssl x509 -in tstmedia.cert.csr -out tstmedia.cert.crt -req -signkey tstmedia.cert.key -days 365
+now u have the certificate ready, and the following four files:
+#	privkey.pem
+#	tstmedia.cert.crt
+#	tstmedia.cert.csr
+#	tstmedia.cert.key
+
+next, configure webrick to use it
+then paste into script/secure_rails
+    #!/usr/bin/env ruby
+    # This command will automatically be run when you run "rails" with Rails 3 gems installed from the root of your application.
+    require 'rails/commands/server'
+    require 'rack'
+    require 'webrick'
+    require 'webrick/https'
+
+    module Rails
+      class Server < ::Rack::Server
+        def default_options
+          super.merge({
+            :Port => 3001,
+            :environment => (ENV['RAILS_ENV'] || "development").dup,
+            :daemonize => false,
+            :debugger => false,
+            :config => File.expand_path("config.ru"),
+            :SSLEnable => true,
+            :SSLVerifyClient => OpenSSL::SSL::VERIFY_NONE,
+            :SSLPrivateKey => OpenSSL::PKey::RSA.new(
+               File.open("config/cert/ss/tstmedia.cert.key").read),
+            :SSLCertificate => OpenSSL::X509::Certificate.new(
+               File.open("config/cert/ss/tstmedia.cert.crt").read),
+            :SSLCertName => [["CN", WEBrick::Utils::getservername]],
+          })
+        end
+      end
+    end
+
+    APP_PATH = File.expand_path('../../config/application',  __FILE__)
+    require File.expand_path('../../config/boot',  __FILE__)
+    require 'rails/commands'
+next, start two servers like so:
+bundle exec ruby script/rails s
+bundle exec ruby script/secure_rails s
