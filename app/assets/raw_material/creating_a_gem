@@ -1,0 +1,79 @@
+[looks like, currently the keyword list is %w(from Section)]
+
+from http://railscasts.com/episodes/135-making-a-gem
+
+hoe, newgem, bones, gemhut, and echoe can help create a new gem. 
+using echo, install echoe, mkdir skinny-databasedotcom-rails/lib, cd skinny-databasedotcom-rails, touch Readme.markdown, Rakefile, lib/skinny-databasedotcom-rails.rb, and that is the gem
+
+The Rakefile will use an Echo block to define the gem name, its version, 
+
+learn about passing a block to a new method, like Echoe.new(args) do |p| ... end
+now in the main gem file, u can namespace inside a module, called module skinny-databasedotcom-rails
+
+rake manifest, rake install, rake -T to see some options,
+create a project/repo on github, in .gitignore, ignore pkg, doc, and Manifest files,
+git remote add origin git@github.com:umarsheikh/skinny-databasedotcom-rails.git
+git push origin master
+rake build_gemspec
+you can also create a CHANGELOG file to track changes in versions, then rake manifest again, then rake build_gemspec if u upgrade the version later on
+u can also make it a rails plugin by just adding a init.rb file, and in it, write: 'require "skinny_databasedotcom_rails"' etc, check spelling
+now ppl can use it both as a gem and a plugin, whichever they choose.
+
+from http://blog.galk.me/post/7443618295/getting-started-with-gems-how-to-create-a-gem-for
+
+gems are platform-independent, plugins are rails-only. both are identical in terms of code, therefore creatinga gem is also called packaging sth as a gem
+
+public gems are hosted at rubygems.org, so create an account there
+using jeweler gem in this.
+gem install jeweler
+go to development directory, and type: jeweler skinny-databasedotcom-rails
+then open Rakefile and add summary and description
+also add gem.files,
+
+as this uses extend, and the earlier tutorial from http://railscasts.com/episodes/135-making-a-gem used include, and a module ClassMethods, so this is a good time to include a discussion on include vs extend. Done in the next section
+
+
+
+Section
+
+The extend method will mix a module’s methods at the class level. The method defined in the Math module can be used as a class/static method.
+Example: class MyJ
+          extend Math
+         end
+         now, m = MyJ.add(5,6), so that the module Math's add method is now a static/class method of MyJ
+
+The include method will mix a module’s methods at the instance level, meaning that the methods will become instance methods.
+
+To mix an object instance with a module you can do the following:
+# Add the module methods to this object instance, only!
+bigint2.extend CurrencyFormatter
+puts bigint2.format   # --> '$2'
+
+this way, extend is used:
+- when in a class, to add the extended class's methods to the class methods
+- when with an instance, to add the extended class's methods to the object methods only
+When a class includes a module the module’s self.included method will be invoked.
+
+module Stringify
+  def self.included(base)
+    # Initialize module.
+  end
+end
+The self prefix indicated that the method is a static module level method.
+
+
+Section Skinny-databasedotcom-rails gem
+
+I need: SkinnyContact = Contact.new('whitelist of attributes here')
+so that when I later do Contact.find('condition')
+I only fetch Contact.whitelisted attributes
+
+Also, I need a method like so as well:
+Contact.find("conditions", [specific attributes]) specific attrs are a subset of the earlier attributes, so i can trim further
+
+Section Step by step create a gem
+cd ~/[path]
+gem install jeweler --no-rdoc --no-ri
+
+
+

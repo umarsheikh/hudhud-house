@@ -8,6 +8,9 @@ class PagesController < ApplicationController
   def mongo_rails_backbone_setup
     render :creating_mongo_and_backbone_app and return
   end
+  def file_upload_with_carrier_wave_and_fog
+    render :file_upload_with_carrier_wave_and_fog and return
+  end
 
   def get_listing
     @blogs = blog_ids

@@ -28,7 +28,8 @@ now u will see that application-34wfrqwfq5r34fasf.js in the source code, which w
 rake assets:precompile will make them in the public directory, from where nginx or apache can serve them fast. 
 
 from http://coderberry.me/blog/2012/04/24/asset-pipeline-for-dummies/
-
+Tilt is to let us use erb, scss, coffee extensions in assets, it first compiles using these templates, then lets sprockets concatenate, compress, and minify them
+to have some javascript files appear at the bottom, you can create other manifest files apart from the application.css manifest file, and require javascript files there using manifest comments. then you can do: "= javascript_include_tag('footer.js')" if the footer.js is the name of the manifest file
 from http://blog.flowdock.com/2011/06/14/rails-3-1-asset-pipeline-in-the-real-world/
 
 

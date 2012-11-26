@@ -1,0 +1,45 @@
+%h2 File Upload on Amazon with Carrierwave and Fog
+
+%p
+  First, using carrierwave with a script is quite simple. Below is a simple script to demonstrate bare-bones use:
+  %br
+  %code.blue
+    require 'carrierwave'
+    %br
+    class SimpleUploader < CarrierWave::Uploader::Base
+    %br
+    &nbsp;&nbsp;storage :file
+    %br
+    end
+    %br
+    \# now use it with:
+    %br
+    uploader = SimpleUploader.new
+    %br
+    uploader.store!(File.open('path/to/file.png'))
+    %br
+
+%p
+  The demonstrated how to save files locally. In order to store files on amazon, we first need the fog gem. Once the fog gem is intalled, making carrier wave store on amazon is as easy as adding a configure block, and specifying the storage option as fog like so:
+  %br
+  %code.blue
+    CarrierWave.configure do |config|
+    %br
+    &nbsp;&nbsp;config.fog_credentials = {
+    %br
+    &nbsp;&nbsp;&nbsp;&nbsp;:provider => 'AWS',
+    \:aws_access_key_id  => 'key',
+    \:aws_secret_access_key => 'secret'
+    %br
+    &nbsp;&nbsp;}
+    %br
+    &nbsp;&nbsp;config.fog_directory  = 'directory_path'
+    %br
+    end
+    %br
+    class SimpleUploader < CarrierWave::Uploader::Base
+    %br
+    &nbsp;&nbsp;storage :fog
+    %br
+    end
+

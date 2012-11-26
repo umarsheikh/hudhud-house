@@ -1,0 +1,10 @@
+from http://railscasts.com/episodes/323-backbone-on-rails-part-1
+
+- create rails app
+- have an action, with a view with just an id, with the content loading... like so:
+  %div{:id => "content"}
+    Loading...
+- make that the root path, u hit url, the page loads, showing the loading div, and then backbone takes over...
+- use https://github.com/meleyal/backbone-on-rails
+- as working on the hudhud-mongobo app, open the assets file app/assets/javascripts/hudhud_mongobo.js.coffee and look at it, to see the backbone objects namespace, initialization etc
+- rails generate backbone:scaffold user

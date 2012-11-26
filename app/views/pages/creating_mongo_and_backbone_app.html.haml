@@ -52,9 +52,14 @@
   the same todo apps, but implement them on the above models.
   
 %h2
-  Whati s mongo
+  What is mongo
 %p
   Schemaless database.
+%h2
+  Scenarios where Mongo seems a good fit
+%ul
+  %li
+    Suppose you have a large file of data on a user. You have information about his books collection, his jobs, projects, hobbies, grades, address etc. You dont want to create a separate table for each type of object. So you can create a mongo document for the user. it then becomes easy to query the user object, find how many books he has, find the number of projects he has completed etc. One way to think about this is that it is hard to query a file. You cannot tell how many books a person has, or if he has taken an algorithms course, without scanning the whole file, which can be costly. So a mongodb document stores this file of information on a user in a way that it can be queried fast.
 %h2
   Creating a simple mongo+mongomapper app
 %p  

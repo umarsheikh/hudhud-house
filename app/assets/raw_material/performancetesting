@@ -1,0 +1,17 @@
+from http://guides.rubyonrails.org/performance_testing.html
+[
+an enter on top and two indentations is a heading, if its length is less than 100 characters.
+an enter on top and bottom is a paragraph
+a dash '-' inidicates li items
+a heading on top also makes a paragraph below
+]
+
+  Wall time
+Real world time elapsed
+
+  Process time
+Time taken by the process, should be same across runs
+
+rake test:profile
+
+rake test:benchark

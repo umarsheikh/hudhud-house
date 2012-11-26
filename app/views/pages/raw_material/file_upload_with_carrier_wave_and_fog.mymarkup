@@ -1,0 +1,126 @@
+[from is for url source, everything underneath till another from token is from the same file
+if some line ends in a colon :, then if the following line is indented 2 spaces more, that wholeconstitutes a block, which has significant whitespace till the end.
+]
+from https://www.engineyard.com/blog/2011/a-gentle-introduction-to-carrierwave/
+
+Thanks to fog, it has support for Amazon S3, Rackspace etc
+
+May be again thanks to fog, There’s ORM support available for ActiveRecord, Mongoid, etc
+
+May be again thanks to fog, image processors are available for rmagick etc
+
+how to begin
+
+1   gem install carrierwave
+
+2   Here is an uploader:
+      require 'carrierwave'
+      class MyUploader < CarrierWave::Uploader::Base
+        storage :file
+      end
+
+3 now we can start saving files:
+    file = File.open('example.jpg')
+    uploader = MyUploader.new
+    uploader.store!(file)
+    
+now install of amazon:
+1   gem install fog
+2   configure the fog_credentials and set the uploader’s storage to fog:
+      CarrierWave.configure do |config|
+        config.fog_credentials = {
+          :provider               => 'AWS',
+          :aws_access_key_id      => 'xxx',
+          :aws_secret_access_key  => 'yyy'
+        }
+        config.fog_directory  = 'zzz'
+      end
+     
+      class MyUploader < CarrierWave::Uploader::Base
+        storage :fog
+      end
+      
+Now, install for rackspace is also very easy. step 2 is:
+1 use to code:
+    CarrierWave.configure do |config|
+      config.fog_credentials = {
+        :provider           => 'Rackspace',
+        :rackspace_username => 'xxx',
+        :rackspace_api_key  => 'yyy'
+      }
+      config.fog_directory = 'zzz'
+    end
+    class MyUploader < CarrierWave::Uploader::Base
+      storage :fog
+    end
+
+To get image thumbnails, we only need to add a version block to the uploader:
+  [after gem install   rmagick]
+  require 'carrierwave'
+  require 'rmagick'
+ 
+  class MyUploader < CarrierWave::Uploader::Base     
+    include CarrierWave::RMagick
+    version :thumb do
+      process :resize_to_fill => [200,200]
+    end
+ 
+    storage :file
+  end
+  
+A whole sinatra app that can be run with: ruby example.rb is pasted underneath:
+  require 'carrierwave'
+  require 'sinatra'
+  require 'sqlite3'
+  require 'sequel'
+  require 'carrierwave/sequel'
+ 
+  # database setup
+ 
+  DB = Sequel.sqlite
+ 
+  DB.create_table :uploads do
+    String :file
+  end
+ 
+  # uploader
+ 
+  class MyUploader < CarrierWave::Uploader::Base
+    storage :file
+  end
+ 
+  # model
+ 
+  class Upload < Sequel::Model
+    mount_uploader :file, MyUploader
+  end
+ 
+  # sinatra app
+ 
+  get '/' do
+    @uploads = Upload.all
+    erb :index
+  end
+ 
+  post '/' do
+    upload = Upload.new
+    upload.file = params[:image]
+    upload.save
+    redirect to('/')
+  end
+ 
+  __END__
+ 
+  @@ index
+  <!DOCTYPE html>
+  <html>
+    <body>
+      <form action="/" method="post" enctype="multipart/form-data"></div>
+        <p><input type="file" name="image" /></p>
+        <p><input type="submit" name="submit" value="Upload" /></p>
+      </form>
+      <% @uploads.each do |upload| %>
+        <img src="<%= upload.file.url %>" />
+      <% end %>
+    </body>
+  </html>
