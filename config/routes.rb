@@ -1,5 +1,5 @@
 HudhudHouse::Application.routes.draw do
-  match "site_scraper/:id" => "site_scraper#index", :as => :site
+  match "site_scraper/*id" => "site_scraper#index", :as => :site, :id => /.+/
 
   get "location/where_we_are", :as => :our_location
 
