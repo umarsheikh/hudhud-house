@@ -1,0 +1,2 @@
+module SiteScraperHelper
+end

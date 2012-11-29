@@ -1,4 +1,6 @@
 HudhudHouse::Application.routes.draw do
+  match "site_scraper/:id" => "site_scraper#index", :as => :site
+
   get "location/where_we_are", :as => :our_location
 
   get "pages/main"
