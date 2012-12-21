@@ -1,0 +1,30 @@
+section general notes
+may not all be metaprogramming, may mix in some other language constructs
+
+better title: ruby advanced features including:
+- metaprogramming
+- blocks lambdas procs
+- keep adding here till satisfied
+- class_inheritable_reader
+- included and extended, and append_features
+
+to learn, may need to figure out:
+- objects and classes
+- sharing behavior
+- dynamic code
+- instance_eval and class_eval
+- hook methods
+
+from http://yehudakatz.com/2009/11/15/metaprogramming-in-ruby-its-all-about-the-self/
+
+from http://ruby-metaprogramming.rubylearning.com/
+
+from http://rubylearning.com/blog/2010/11/23/dont-know-metaprogramming-in-ruby/
+
+from http://rubysource.com/hitchhikers-guide-to-metaprogramming-classmodule-hooks/
+
+from http://99designs.com/tech-blog/blog/2012/10/30/abusing-ruby-for-fun-and-profit/
+
+from http://yehudakatz.com/2009/08/24/my-10-favorite-things-about-the-ruby-language/
+
+ruby modules provide the lifecycle hooks append_features and included

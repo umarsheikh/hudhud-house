@@ -124,3 +124,7 @@ A whole sinatra app that can be run with: ruby example.rb is pasted underneath:
       <% end %>
     </body>
   </html>
+  
+Now from creating the local app, look into its commit history!
+
+

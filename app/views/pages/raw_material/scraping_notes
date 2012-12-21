@@ -1,0 +1,20 @@
+sometimes you cannot even access a site, example http://www.maxpreps.com/contests/O5FuuzLmiky-byxZesiLlQ/basketball-winter-12-13/boxscore-massac-county-metropolis-vs-meridian-mounds.htm . Being in Pakistan, they disallow most probably anyone from Pakistan for accessing them.
+
+But I need to access it in order to scrape information from it. 
+
+from http://blog.thestateofme.com/2010/10/27/using-amazon-ec2-as-a-web-proxy/
+
+
+Next
+What is a proxy server?
+from http://en.wikipedia.org/wiki/Proxy_server
+a server that acts as an intermediary for requests from clients seeking resources from other servers
+
+Why do i need a proxy?
+the destination server filters request based on origin of request, example ip-based geolocation, to restrict access to a country, can be accessed using a proxy located in that country to access the service
+
+look at https://github.com/jianxioy/ruby-proxy/blob/master/proxy.rb
+
+amazon setup: http://blog.philippheckel.com/2012/06/15/script-your-us-proxy-server-in-two-minutes-using-amazon-ec2/
+
+

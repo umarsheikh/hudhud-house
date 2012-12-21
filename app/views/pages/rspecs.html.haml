@@ -1,0 +1,21 @@
+%h3
+  How to add helper methods
+I have a few methods that I need to reuse, in a number of specs.
+%br
+So I need to make some methods available in all. One solution is to do:
+%br
+write a module, and write those methods in that module, then in each describe block that needs to use it,
+%br
+simply include that module. This way, each describe block behaves like a class, and we can include modules in the 
+%br
+class, so this is a similar concept.
+%br
+Yet another way, which is even better, is to do the same as above, but then to write in a spec_helper.rb file:
+%br
+.code
+  RSpec.configure do |c|
+  %br
+  &nbsp;&nbsp; c.include ModuleNameHelpers
+  %br
+  end
+

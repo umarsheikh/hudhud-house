@@ -1,0 +1,41 @@
+%h2 How to ajaxify a form
+%p
+  You are viewing a page of a resource of type Type1, which has many elements of type Type2 associated with it.
+  
+  For each element of Type2 displayed, there is a corresponding form, and consequently, a form_for helper.
+  
+  But the update action of Type2 responds to html request by showing the resource of Type2, not Type1.
+  
+  We need to first submit through ajax, on success, update the displayed element of type Type2 and a flash message,
+  
+  and if on failure, need to display the error without updating the attached view, and a flash message.
+  
+  So here are the steps:
+  
+  if u simply add the option :remote => true to form_for, u will make the submission work. in the controller, 
+  if format.js is there, then it will look for the action.js.erb file and render it, so you can write code
+  there. But you may want to do something more complicated, example u want callbacks etc. 
+  
+  to achieve that, a) tell the controller action not to render anything, just return render :nothing => true
+  b) the rails ujs ajax call provides the following actions: (ajax:before, ajax:after, ajax:loading, ajax:success, ajax:failure, ajax:complete, so u can have a separate script, eg a file.js, where u can do stuff like:
+  
+  $('some-selector').bind('ajax:success', function(){$(this).closest('elem').fadeIn();}) etc
+  
+  So determine how you want to tackle it: 
+  a) inline, may be ugly
+  b) handle submission through ajax separate, with the callback right there. want to explore this out more. looks standard esp on other projects. Makes rails stop interacting directly with the js stuff
+  c) use rails remote => true, and return a js.erb file using format.js. explore this as well. Doesnt look quite nice though
+  d) use rails remote => true, render nothing from controller, and use the provided actions in a separate script. looks railsy and standard. would use this currently, and explore the others later.
+  e) user rails remote => true, render some valid response, and same as d)
+  
+  see http://net.tutsplus.com/tutorials/javascript-ajax/using-unobtrusive-javascript-and-ajax-with-rails-3/
+  
+  but the controller can do the processing just fine, and return success, but there can be a parsing error
+  if the response is not correctly parse (parseerror) so one has to know how to respond, so read up on the 
+  format.js options a bit
+  
+  steps for option e)
+  make sure u are returning valid js response from controller, or even though it is successful it can cause 
+  parseerror and therefore ajax:error will execute.
+  
+  

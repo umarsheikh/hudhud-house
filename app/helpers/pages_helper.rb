@@ -26,6 +26,7 @@ module PagesHelper
     mongoid_simple_commands
     salesforce_app
     file_upload_with_carrier_wave_and_fog
+    rspecs
     ]
   end
   def portfolio_first_for
