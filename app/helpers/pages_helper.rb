@@ -27,6 +27,7 @@ module PagesHelper
     salesforce_app
     file_upload_with_carrier_wave_and_fog
     rspecs
+    ajaxify_form_submission
     ]
   end
   def portfolio_first_for
