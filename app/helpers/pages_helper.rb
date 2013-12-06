@@ -28,6 +28,8 @@ module PagesHelper
     file_upload_with_carrier_wave_and_fog
     rspecs
     ajaxify_form_submission
+    setting_up_dev_machine
+    problem_based_learning
     ]
   end
   def portfolio_first_for

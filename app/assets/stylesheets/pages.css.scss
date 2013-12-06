@@ -12,3 +12,12 @@
 code.blue {
   color: blue;
 }
+.blue {
+  color: lighten(green, 10%);
+  text-decoration: underline;
+}
+.problem-set {
+  margin: 5px 2px 5px;
+  padding: 5px;
+  border: 1px dotted blue;
+}

@@ -1,0 +1,47 @@
+%div.problem-set
+  %h2.blue Problem 1
+  There are multiple video files on a page. How to download them all?
+
+  %h3.blue Background
+  On a page like https://class.coursera.org/ml-003/lecture/index, there are 113 video files. I want to download them all, and combine them, so that I can view the whole course in 6 or so videos, instead of 113.
+
+  %h3.blue Solution 1
+  Download them all with 
+  %pre
+    %code.blue
+      wget -l inf -r -np https://class.coursera.org/ml-003/lecture/index
+  %br
+  The videos are named download.mp4?lecture_id=29, download.mp4?lecture_id=30, etc.  Convert all files to an intermediate format like so:
+  avconv -i download.mp4?lecture_id=2 -c copy -bsf:v h264_mp4toannexb -f mpegts intermediate2.ts
+  Basically, generate a file like so:
+  %pre
+    %code.blue
+      for i in $(seq 2 114); do echo "avconv -i download.mp4?lecture_id=$i -c copy -bsf:v h264_mp4toannexb -f mpegts intermediate$i.ts" >> ffmpeg_commands; done
+  %br
+  Next, execute this file like so:
+  %br
+  %pre
+    %code.blue
+      sh ffmpeg_commands
+
+  %br
+  The above will convert all files to an intermediate state. Now combine 20 videos each by doing the following:
+  %br
+  %pre
+    %code.blue
+    
+      avconv -i "concat:intermediate2.ts|intermediate3.ts|intermediate4.ts|intermediate5.ts|intermediate6.ts|intermediate7.ts|intermediate8.ts|intermediate9.ts|intermediate10.ts|intermediate11.ts|intermediate12.ts|intermediate13.ts|intermediate14.ts|intermediate15.ts|intermediate16.ts|intermediate17.ts|intermediate18.ts|intermediate19.ts|intermediate20.ts" -c copy -bsf:a aac_adtstoasc set_1.mp4
+  %br
+  In other words, use a scripting language to generate strings like the following:
+  %pre
+    %code.blue
+      avconv -i "concat:intermediate2.ts|intermediate3.ts|intermediate4.ts|intermediate5.ts|intermediate6.ts|intermediate7.ts|intermediate8.ts|intermediate9.ts|intermediate10.ts|intermediate11.ts|intermediate12.ts|intermediate13.ts|intermediate14.ts|intermediate15.ts|intermediate16.ts|intermediate17.ts|intermediate18.ts|intermediate19.ts|intermediate20.ts" -c copy -bsf:a aac_adtstoasc set_1.mp4
+      \...
+      avconv -i "concat:intermediate101.ts|intermediate102.ts|intermediate103.ts|intermediate104.ts|intermediate105.ts|intermediate106.ts|intermediate107.ts|intermediate108.ts|intermediate109.ts|intermediate110.ts|intermediate111.ts|intermediate112.ts|intermediate113.ts|intermediate114.ts" -c copy -bsf:a aac_adtstoasc set_6.mp4
+      
+  Do this for files 2-20, 21-40, 41-60, 61-80, 81-100, 101-114, and you are done.
+  %br
+  Delete the intermediate files, and also delete the originals, no need to consume extra space.
+  %br
+  You can generate teh above string using a ruby program.
+
