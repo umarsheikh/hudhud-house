@@ -3,3 +3,5 @@
 %ol
   - @blogs.each do |blog|
     %li= link_to(blog.titleize, blog_path(blog))
+  - @blogs_with_titles.each do |title, blog|
+    %li= link_to(title, blog_path(blog))

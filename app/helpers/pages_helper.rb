@@ -30,7 +30,11 @@ module PagesHelper
     ajaxify_form_submission
     setting_up_dev_machine
     problem_based_learning
+    javascript_course_outline
     ]
+  end
+  def blog_names_and_ids
+  [["How to Learn Javascript - A Short Course Outline", "javascript_course_outline"]]
   end
   def portfolio_first_for
     str = ""

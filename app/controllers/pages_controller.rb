@@ -14,6 +14,7 @@ class PagesController < ApplicationController
 
   def get_listing
     @blogs = blog_ids
+    @blogs_with_titles = blog_names_and_ids
   end
 
   def blog
