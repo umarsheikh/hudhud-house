@@ -33,7 +33,9 @@ module PagesHelper
     ]
   end
   def blog_names_and_ids
-  [["How to Learn Javascript - A Short Course Outline", "javascript_course_outline"]]
+  [["How to Learn Javascript - A Short Course Outline", "javascript_course_outline"],
+  ["Octave Installation and Basics for Mathematical Programming", "octave_1"],
+  ]
   end
   def portfolio_first_for
     str = ""

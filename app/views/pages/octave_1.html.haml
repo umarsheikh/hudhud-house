@@ -1,0 +1,60 @@
+%h2.heading-green
+  A Beginner Tutorial on Octave - Installation and Basic Commands
+
+%h3.heading-green Installation
+
+%pre
+  %code
+    sudo apt-add-repository ppa:octave/stable
+    sudo apt-get update
+    sudo apt-get install octave -y
+    sudo apt-get install liboctave-dev -y
+
+%h4.heading-green Fooling Around in the octave command line
+%pre
+  %code
+    help eye; help rand; help help;
+    A = [1 2; 3 4; 5 6]
+    size(A)
+    size(A, 1)
+    size(A, 2)
+    v = [1 2 3 4]
+    length(v)
+    length(A)
+    pwd
+    cd ".."
+    ls
+%pre.blue
+  Text file "data" has the following data:
+  12 3
+  45 3
+  567 2
+  \... and so on
+  We can read this file into a matrix as follows:
+%pre
+  %code
+    load data
+    load('data')
+    who
+    \% if you now look at the data variable, it will have the required data in a matrix
+    whos
+    clear A
+    v = output_data(1:4)
+    save modified_output.mat % will save whole session
+    save modified_output.mat v % will only save v
+    clear
+    load modified_output.mat
+    save hello.txt v -ascii
+    a = [1 2; 3 4; 5 6]
+    a(3,2) % will index into it (1-based)
+    a(2,:) % column means everything along that row or column
+    a(:,2)
+    a([1 3], :) % get rows 1 and 3, and put them in an array
+    a(:, 2) = [10; 11; 12]
+    a = [a, [100;101;102]] % append a column to the right with data 100,101,102
+    a(:) % one column vector has all data
+    a = [1 2; 3 4; 5 6]
+    b = [7 8; 9 10; 11 12]
+    c = [a b]
+    c = [a; b]
+    c = [a, b]
