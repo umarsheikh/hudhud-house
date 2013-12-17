@@ -35,6 +35,7 @@ module PagesHelper
   def blog_names_and_ids
   [["How to Learn Javascript - A Short Course Outline", "javascript_course_outline"],
   ["Octave Installation and Basics for Mathematical Programming", "octave_1"],
+  ["Javascript Reference Implementations for Common Patterns", "javascript_patterns"],
   ]
   end
   def portfolio_first_for

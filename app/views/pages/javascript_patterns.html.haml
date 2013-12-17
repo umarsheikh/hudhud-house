@@ -1,0 +1,160 @@
+%h2.heading-green Implementation of Common Patterns In Javascript
+
+%h3.green Singleton Pattern (Literal Notation)
+Instead of creating an object using the new keyword and a function call, you create an object using literal notation.
+Since you don't now have to use the new keyword, this object is already initialized with the name you gave it. You can begin using it immediately. Usually we create them for the singleton pattern. Here is a reference example:
+%br
+%pre
+  %code
+    var apple = {
+    \  type: "singhri",
+    \    color: "red",
+    \    getInfo: function () {
+    \        return this.color + ' ' + this.type + ' apple';
+    \    }
+    }
+    apple.color = "purple";
+    alert(apple.getInfo());
+
+%h3.green Singleton Pattern (Anonymous Function)
+Again, this sytax is used to create an object you want only one instance of. This is also a way to create modules. It is pretty much the above with anonymous function syntax. You can use it to create one instance of an object, which is already initialzed when the function terminates, and you can begin using it.
+%br
+%pre
+  %code
+    var apple = new function(){
+    \  this.type = "singhri";
+    \  this.color = "red";
+    \  this.getInfo = function(){
+    \    return this.color + " " + this.type + " apple";
+    \  };
+    }
+    apple.color = "purple";
+    alert(apple.getInfo());
+
+%h3.green Inheritance Pattern
+
+Four-step process.
+%br
+%div.blue Step 1: define the base class
+%pre
+  %code
+    function Person(){}
+    Person.prototype.welcome = function(){alert("welcome to javascript 101");};
+%br
+%div.blue Step 2: define the sub class, and link to parent constructor
+%pre
+  %code
+    function Worker(){
+    \  Person.call(this);
+    }
+%br
+%div.blue Step 3: inherit from the base class
+%pre
+  %code
+
+    Worker.prototype = new Person();
+%br
+%div.blue Step 4: correct the constructor pointer
+%pre
+  %code
+    Worker.prototype.constructor = Worker;
+
+%h3.green Pseudo-Classical Inheritance Pattern
+This is very similar to the above, in fact, pretty much another way to write the same thing. it uses a function for inheritance, declares the prototypes of different functions (which are made since class keyword is missing) using literal syntax, then corrects child constructor pointer just like above. I am writing this here just so that this common pattern is also easily recognized.
+
+%div.blue Step 1: function for inheritance, and correct the child constructor pointer
+%pre
+  %code
+    var extendObj = function(child, paren){
+    \  var tmp = function(){}
+    \  tmp.prototype = paren.prototype;
+    \  child.prototype = new tmp();
+    \  child.prototype.constructor = child;
+    }
+%div.blue Step 2: Create base class, and its prototype
+%pre
+  %code
+    var Person = function(){};
+    Person.prototype = {
+    \  name: '',
+    \  gender: '',
+    \  occupation: '',
+    \  greeter: function(){alert("I am " + this.name + " and I am a " + this.gender + "; I am a " + this.occupation);}
+    }
+%div.blue Step 3: Create sub classes
+%pre
+  %code
+    var Carpenter = function(name){
+    \  this.name = name;
+    \  this.occupation = "carpenter";
+    }
+    var Plumber = function(name){
+    \  this.name = name;
+    \  this.occupation = "plumber";
+    }
+%div.blue Step 4: Link subclass to superclass
+%pre
+  %code
+    extendObj(Carpenter, Person);
+    extendObj(Plumber, Person);
+
+%h3.green Functional Inheritance pattern 1
+Some features of this functional inheritance pattern:
+%ul
+  %li you create objects without using the 'new' keyword
+  %li the 'this' keyword is also missing
+Base object creates an empty object, adds some properties and methods to it, and returns it. The child object uses this object and adds more methods and properties to it. (Since this happens to each object thus created, it is more expensive than the inheritance pattern using methods in the prototype property, which only executes once, just like in the classical pattern in other languages.)
+
+%pre
+  %code
+    function Person(spec){ // alternate syntax: var Person = function(spec){
+    \  var that = {};
+    \  that.name = spec.name;
+    \  that.gender = spec.gender || '';
+    \  return that;
+    }
+    function Student(spec){ // alternate syntax: var Student = function(spec){
+    \  var that = Person(spec);
+    \  that.roll_number = spec.roll_number || 0;
+    \  that.sayhello = function(){
+    \    return "hello " + that.name;
+    \  }
+    \  return that;
+    }
+
+    var student = Student({name: "I am a functional object"});
+    alert(student.sayhello());
+
+%div.blue One advantage of the other approach is that the closures of the functions allow for good use of private methods and attributes.
+%div Here is sample code:
+%pre
+  %code
+    var vehicle = function(attrs){
+    \  var _privateObj = {hasEngine: true},that = {};
+    \  that.name = attrs.name;
+    \  that.engineSize = attrs.engineSize;
+    \  that.hasEngine = function(){return "this " + that.name + " has engine: " + _privateObj.hasEngine;};
+    \  return that;
+    }
+    \
+    var motorbike = function(){
+    \  var _privateObj = {numWheels: 2},
+    \  that = vehicle({name: "motorbike", engineSize: "Small"});
+    \  that.totalNumWheels = function(){return "this bike " + that.name + " has " _privateObj.numwheels + " wheels";};
+    \  that.increaseWheels = function(){_privateObj.numWheels++;};
+    \  return that;
+    }
+    \
+    var boat = function(){
+    \  that = vehicle({name: 'boat', engineSize: 'large'});
+    \  return that;
+    }
+    \
+    myBoat = boat();
+    myBoat.hasEngine();
+    alert(myBoat.engineSize);
+    myMotor = motorbike();
+    myMotor.hasEngine();
+    myMotor.increaseWheels();
+    myMotor.totalNumWheels();
+    alert(myMotor.engineSize);
