@@ -3,15 +3,17 @@
 %ul
   %li
     sudo apt-get remove postgresql postgresql-8.4
+    %li sudo apt-get install postgresql libpq-dev postgresql-contrib -y
   %li
-    sudo -u postgres psql postgres
+    sudo -u postgres psql postgres (whenever u need to su as postgres use this command)
     %br
-    \password # and enter a new password
+    \\password # and enter a new password
     %br
     also read http://serverfault.com/questions/110154/whats-the-default-superuser-username-password-for-postgres-after-a-new-install
   %li
     .optional
       sudo su - postgres
+  %li sudo -u postgres createuser [[someusername]] --pwprompt
   %li
     .optional
       psql template1 < /usr/share/postgresql/8.4/contrib/adminpack.sql
@@ -28,7 +30,7 @@
   %li
     psql # now i can connect to the shell, since i am logged in as user umar and it connects to db umar.
   %li
-    back to installation instruction. I had earlier set up postgres user account for umar apparently, so if the db file, i used user umar and it started working! so for heroku apps, use user umar!
+    back to installation instruction. I had earlier set up postgres user account for umar apparently, so if the db file, i used user umar and it started working! so for heroku apps, use user umar! Also, the user umar may have a password, but when you create database using the database.yml file, the password for the database may/may not be the same as the password for umar. It is a database-specific password.
     
     
 %h3

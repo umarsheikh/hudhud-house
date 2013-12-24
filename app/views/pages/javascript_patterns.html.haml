@@ -158,3 +158,76 @@ Base object creates an empty object, adds some properties and methods to it, and
     myMotor.increaseWheels();
     myMotor.totalNumWheels();
     alert(myMotor.engineSize);
+
+%h3.green Anonymous Function Declaration
+Create an anonymous function:
+%pre
+  %code
+    function(){}
+Execute it immediately:
+%pre
+  %code
+    (function(){}());
+
+%h3.green Pass Globals to Anonymous Function, Also Called Global Import
+This technique is faster than having globals, since globals get aliased to local variables.
+%pre
+  %code
+    (function($, YAHOO){...}(jQuery, YAHOO));
+
+%h3.green The Basic Module Pattern
+This basic pattern is much like the "Pass Globals to Anonymous Function, Also Called Global Import" Pattern. Except that instead of passing globals to the anonymous function, we want to create a global variable using the result of the anonymous function's return value.
+
+%pre
+  %code
+    var MODULE = (function(){
+    \  var that = {};
+    \  that.some_property = true;
+    \  ...
+    \  return that;
+    }());
+
+%h3.green Module Augmentation Pattern
+%pre
+  %code
+    var MODULE = (function(my){
+    \  my.anothermethod = function(){};
+    \  my.someotherprop = 12;
+    \  return my;
+    }(MODULE));
+In the above example, the 'var' before MODULE is not needed, since it is also declared before.
+
+%h3.green Loose Augmentation
+Useful for multipart modules divided over many files, and where load order may be non deterministic.
+%pre
+  %code
+    var MODULE = (function(my){
+    \  my.anothermethod = function(){};
+    \  my.someotherprop = 12;
+    \  return my;
+    }(MODULE || {}));
+
+%h3.green Tight Augmentation
+You can override/use properties/methods safely. Tight augmentation implies a set loading order, where you can override/use properties defined in other files.
+%pre
+  %code
+    var MODULE = (function(my){
+    \  var old_method = my.module_method;
+    \  my.module_method = function(){
+    \  // has access to old method through old_method, can override.
+    };
+    \  my.someotherprop = 12;
+    \  return my;
+    }(MODULE));
+
+%h3.green Sub Module Pattern
+
+%pre
+  %code
+    MODULE.sub = (function(){
+    \  var my = {};
+    \  //;
+    \  return my;
+    }());
+%h3.green Cloning and Inheritance Pattern
+to be done later... look at http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
