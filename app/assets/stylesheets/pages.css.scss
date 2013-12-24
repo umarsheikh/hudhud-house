@@ -21,6 +21,12 @@
   padding: 5px;
   border: 1px dotted blue;
 }
+.floater-left {
+  float:left;
+}
+.clear {
+  clear: both;
+}
 .green {
   color: lighten(green, 10%);
 }

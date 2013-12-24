@@ -1,7 +1,15 @@
-%h3{style: "font-style: italic;"}
-  Some smaller blogs/notes I have found useful in no particular order
-%ol
-  - @blogs.each do |blog|
-    %li= link_to(blog.titleize, blog_path(blog))
-  - @blogs_with_titles.each do |title, blog|
-    %li= link_to(title, blog_path(blog))
+%div.floater-left
+  %h3.heading-green
+    Blogs And Tutorials in Fine Shape
+  %ol
+    - all_blogs[:detailed].each do |title, blog|
+      %li= link_to(title, blog_path(blog))
+
+%div.floater-left
+  %h3.heading-green
+    Incomplete/Abandoned Material for Blogs
+  %ol
+    - all_blogs[:needs_work].each do |title, blog|
+      %li= link_to(title, blog_path(blog))
+
+%div.clear

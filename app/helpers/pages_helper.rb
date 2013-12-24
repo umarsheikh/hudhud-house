@@ -20,23 +20,29 @@ module PagesHelper
     end
     list
   end
-  def blog_ids
-    %W[
-    postgres_setup
-    mongoid_simple_commands
-    salesforce_app
-    file_upload_with_carrier_wave_and_fog
-    rspecs
-    ajaxify_form_submission
-    setting_up_dev_machine
-    problem_based_learning
-    ]
+  def all_blogs
+    {
+      :detailed => detailed,
+      :needs_work => needs_work
+    }
   end
-  def blog_names_and_ids
+  def detailed
   [["How to Learn Javascript - A Short Course Outline", "javascript_course_outline"],
-  ["Octave Installation and Basics for Mathematical Programming", "octave_1"],
   ["Javascript Reference Implementations for Common Patterns", "javascript_patterns"],
+  ["Miscellaneous Problems Encountered in Development and Their Solutions", "problem_based_learning"],
+  ["Set Up and Configure Postgresql on Ubuntu for Rails Development", "postgres_setup"],
   ]
+  end
+  def needs_work
+    [
+    #["Some Simple Mongoid Commands to Get Started", "mongoid_simple_commands"],
+    #["Salesforce App Development", "salesforce_app"],
+    ["Octave Installation and Basics for Mathematical Programming", "octave_1"],
+    ["File Upload with Carrier Wave and Fog", "file_upload_with_carrier_wave_and_fog"],
+    ["Rspecs and Testing", "rspecs"],
+    ["How to Ajaxify Form Submission in Rails", "ajaxify_form_submission"],
+    ["Setting Up Dev machine", "setting_up_dev_machine"]]
+
   end
   def portfolio_first_for
     str = ""
