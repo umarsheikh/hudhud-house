@@ -37,7 +37,9 @@ module PagesHelper
     [
     #["Some Simple Mongoid Commands to Get Started", "mongoid_simple_commands"],
     #["Salesforce App Development", "salesforce_app"],
+    ["Machine Learning Course Notes", "machine_learning"],
     ["Octave Installation and Basics for Mathematical Programming", "octave_1"],
+    #["Javascript Event Garder", "javascript_events"],
     ["File Upload with Carrier Wave and Fog", "file_upload_with_carrier_wave_and_fog"],
     ["Rspecs and Testing", "rspecs"],
     ["How to Ajaxify Form Submission in Rails", "ajaxify_form_submission"],

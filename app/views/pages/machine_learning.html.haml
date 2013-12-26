@@ -1,0 +1,308 @@
+%h3 Classification Problem
+%p
+  %pre
+    h(x) = Theta-transpose X (Theta.T.X)
+    This (linear regression) is not a good model for Classification, 0-1 problems.
+    Logistic Regression is a classification algo, not a regression algo,
+    Hypothesis Representation.
+    we want: 0 < h(x) < 1
+    in olden case, it was: h(x) = Theta times x
+    this time it is: g(theta times x)
+    g(z) = 1/(1 + exp(-z))
+    this is the sigmoid function
+    now in this case, h(x) will always be between 0 and 1, and i will interpret it as the probability that y=1 on input x.
+    if x = [x0, x1] = [1 tumorsize], and h(x) = 0.7, i will tell patient he has .7 probability of having malignant tumor.
+    that is, for y=1, he has probability 0.7
+    h(x) = P(y=1|x;theta)
+    probability y=1, given x, parameterized by theta
+    since y = 0, or 1, so y = 0 can be calculated easily.
+    Decision boundary.
+    suppose h(x) = g(theta-0 + theta-1.x1 + theta-2.x2)
+    suppose theta-0 = -3, theta-1 = 1, theta-2 = 1
+    theta = [-3 1 1]
+    predict y = 1 if -3 + x1 + x2 >= 0
+    x1 + x2 = 3 is the decision boundary
+    Non Linear Decision Boundary
+    h(x) = g(theta-0 + theta-1.x1 + theta-2.x2 + theta-3.x1^2 + theta-4.x2^2)
+    eg theta = [-1 0 0 1 1] in the above example via a procedure yet to be specified
+    now, predict y = 1 if -1 + x1^2 + x2^2 >= 0
+    this is equation of a circle radius 1
+    you can have more complicated decision boundaries eq:
+    h(x) = g(theta-0 + theta-1.x1 + theta-2.x2 + theta-3.x1^2 + theta-4.x1^2.x2 +
+    \          theta-5.x1^2.x2^2 + theta-6.x1^3.x2 + ...)
+    Next Video: how to automatically choose parameters theta so that given a training set, we can automatically fit the parameters to our data.
+    
+    Logistic Regression
+    Simplified Cost Function and Gradient Descent
+    J(theta) = (1/m)(Summation(i in 1..m)Cost(h(theta(xi)), yi))
+    Cost(h(theta(x)), y) = if y = 1, -log(h(theta(x)))
+    \                       if y = 0, -log(1 - h(theta(x)))
+    \                       Note, y is either 0 or 1
+    One equation for the above which gets rid of the two equations and is good for gradient descent:
+    Cost(h(theta(x)), y) = -ylog(h(theta(x))) - (1-y)log(1-h(theta(x)))
+    
+    therefore logistic regression cost function can be written as:
+    J(theta) = (1/m)(Summation(i in 1..m)Cost(h(theta(xi)), yi))
+    \         = (-1/m)(Summation(i in 1..m)yilog(h(theta(xi))) +(1-yi)log(1-h(theta(xi)))  )
+    Why this cost function?
+    \  In statistics you can derive this as maximum likelihood estimation
+    \  it is also convex.
+    Now, given this cost function, we need to find the parameters theta that minimize the cost function above,
+    
+    that is, choose theta such that min(over theta)J(theta)
+    Once you have chosen such a theta, then given a new input x,
+    you predict y as follows:
+    output h(theta(x)) = 1/(1+exp(-theta-transpose times x))
+    \                   = 1/(1+exp(-theta.x)) where theta and x are vectors, and you take their dot product.
+    also, we are also going to predict the output value as the probability that y = 1.
+    P(y=1|x;theta)
+    The only task left is to now minimize J(theta) and choose theta in the appropriate way.
+    Repeatedly do: {
+    theta-j = theta-j - a(d/d(theta-j)J(theta))
+    simultaneously update all theta-j
+    }
+    Now, partial derivative of J(theta) wrt to theta-j, for all j is:
+    d of J(theta)/d(theta-j) = (1/m)Summation(i in 1..m) (h(theta(xi)) - yi)x(sub j super i)
+    
+    so, let theta = [theta-0 theta-1 ... theta-n]
+    Repeatedly do: {
+    theta-j = theta-j - a(summation(i in 1..m)(h(theta, xi) - y(i))x(j,i))
+    }
+    The above equation is exactly what we had for linear regression!
+    So what has changed? in linear regression, h(x) = theta'.X
+    In logistic regression, h(x) = 1/(1+exp(-theta'.X))
+    
+    Next Video: Logistic Regression
+    \            Advanced Optimization.
+    The setting is, that we want to compute both J(theta) as well as partial derivatives with respect to each theta-j of J(theta). Gradient descent repeatedly performs theta-j = theta-j - (alpha x d(J)/d(theta-j))
+    
+    Suppose that given theta, we have code that can compute
+    1. J(theta)
+    2. d/d(theta-j) J(theta)
+    we have the following optimization algorithms:
+    1 Gradient Descent
+    2 Conjugate Gradient
+    3 BFGS
+    4 L-BFGS
+    The advantages of 2-4 are: no need to manually pick alpha, often faster than gradient descent
+    disadvantage: more complicated.
+    bascially, they have a good inner loop that picks a good alpha itself, so in each iteration the alpha can be different, so you dont need to manually pick alpha.
+    octave indexes from 1.
+    
+Here is the example code for the above:
+%pre
+  function [jVal, gradient] = costFunction(theta)
+  jVal = (theta(1)-5)^2 + (theta(2)-5)^2;
+  gradient = zeros(2,1);
+  gradient(1) = 2*(theta(1)-5);
+  gradient(2) = 2*(theta(2)-5);
+  \% Basically, J(theta) = (theta-1 - 5)^2 + (theta-2 - 5)^2
+  \% Partial derivative wrt theta-1: 2(theta-1 - 5), theta-2: 2(theta-2 - 5) 
+  \% we know the minimum happens if theta-1 = theta-2 = 5
+  \% What this function does is: returns two values, one is the J(theta) or the value of the cost function
+  \% the other is: it returns the gradient at the particular value of theta, so if u tell it theta-1 and theta-2, it 
+  \% will tell the value of the gradient of J(theta) wrt theta-1, theta-2 at the value of theta specified.
+  \% u call it like this: 
+  \%% options = optimset('GradObj', 'on', 'MaxIter', '100'); set GradObj to on, and max number of iterations to 100
+  \%% initialTheta = zeros(2,1)
+  \%%  [optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options)
+  \% u will get [5 5] as the return value of optTheta, functionVal at that point about 0, and exitFlag of 1.
+  
+Now back to the discussion:
+%pre
+  In pseudocode, the above is:
+  function [jVal, gradient] = costFunction(theta)
+  \ jval = [code to compute J(theta)];
+  \ gradient(1) = [code to compute d(J(theta))/d(theta-0)];
+  \ gradient(2) = [code to compute d(J(theta))/d(theta-1)];
+  \ gradient(n+1) = [code to compute d(J(theta))/d(theta-n)];
+
+%pre
+  next Video
+  Logistic Regression
+  Multi-class classification: one vs all
+  Example: email foldering/tagging: work, friends, family, hobby
+  \                                  y=1,  y=2,     y=3,    y=4
+  Medical diagnosis: not ill, cold, flu
+  \                   y=1,     y=2,  y=3
+  Weather: sunny, cloudy, rainy, snow
+  \         y=1,   y=2,    y=3,   y=4
+  Suppose you have three class classification problem, you can turn it into three separate binary classification problems
+  class 1, 2, and 3. you do: 1 vs rest, 2 vs, rest, and 3 vs rest.
+  so for 1 vs rest, reinterpret so that class 1 gets assigned to class 1 or the positive class, and classes 2 and 3 get assigned to class 2, or the negative class.   Now, try to learn a classifier, h(sub theta, super 1)(x)
+  do logistic regresssio non it. 
+  next do it for class 2, assign class to positive class, and the rest to negative class. and calculate h(sub theta, super 2)(x)
+  and do for three: h(sub theta, super 3)(x)
+  so we have three classifiers: h(theta; i)(x) = P(y=i|x;theta) for i in 1, 2, 3
+  Then, on a new input x, to make a prediction, pick the class i that maximizes
+  \ max over i, h(theta, i)(x)
+  
+%pre
+  Next video: Regularization
+  The problem of Overfitting
+  the example of predicting housing prices wrt the size of the house, or given the size of the house
+  theta-0 + theta-1.x   theta-0 + theta-1.x + theta-2.x^2     theta-0 + theta-1.x + theta-2.x^2 + theta-3.x^3 + theta-4.x^4
+  the linear one may be underfitting, since it seems from the graph that it does not capture the data very well.
+  So we call that this algorithm has "high bias"
+  roughly it means that it is not fitting even the training data very well.
+  if in example we have 5 training samples and we do the 4th degree polynomial
+  we may fit all the points. we may run into the problem of overfitting here.
+  This algorithm has "high variance". basically it means we dont have enough data to constrain the set
+  of solutions that we can employ to fit the data.
+  so overfitting: if we have too many features, the learned hypothesis may fit the data very well(J(theta) very nearly = 0)
+  but fail to generalize to new examples (predict prices on new examples).
+  the same thing can happen to logistic regression as well.
+  
+  examples: h(theta, x) = g(theta-0 + theta-1.x1 + theta-2.x2)
+  the above may try to partition only using a straight line. this may be an example of underfitting.
+  h(theta,x) = g(theta-0 + theta-1.x1 + theta-2.x2 + theta-3.x1^2 + theta-4.x2^2 + theta-5.x1.x2 )
+  the above may be just right.
+  
+  but if we fit very high degree like
+  h(theta, x) = g(theta-0 + theta-1.x1 + theta-2.x1^2 + theta-3.x1^2.x2 + theta-4.x1^2.x2^2 + theta-5.x1^2.x2^3 + ...)
+  The above may be overfitting.
+  How to address Overfitting?
+  you can plot the data and see visually, 
+  if we have lots of features, and very little training data, then overfitting may be a problem.
+  two main options: try to reduce the number of features, manually select which features to keep.
+  the other is: model selection algorithms (automatically decide which features to keep and whcih to throw out)
+  the second option is "Regularization."
+  \- keep all the features, but reduce magnitude/values of parameters theta-j
+  \- works well when we have lots of featuers, each of which contributes a bit to predicting y.
+
+%pre
+  Regularization
+  Cost Function
+  Now the next all videos should be done on the course page, not offline due to exercises.
+  Intuition. We saw that in linear regression example, 2nd degree polynomial looked just right, but
+  higher order one loooked overfitting.
+  Suppose we penalize and make theta-3, theta-4 very small. 
+  min over theta, (1/2m)(sum i in 1..m)((h(theta, x(i))-y(i))^2)
+  now the new one is:
+  min over theta, (1/2m)(sum i in 1..m)((h(theta, x(i))-y(i))^2) + 1000.theta-3^2 + 1000.theta-4^2
+  in the above cost function, it will be minimized with theta-3, theta-4 close to 0
+  so we end up with essentially a quadratic function. we penalized two of the parameter values being large
+  Regularization:
+  Small values for parameters theta-0,...theta-n
+  \- simpler hypothesis
+  \- less prone to overfitting.
+  also, it is possible to show that having small values of the parameters corresponds to smoother functions
+  which are also less prone to overfitting.
+  Example. Housing, given x1, x2, ..., x100, and theta-0...theta-100,
+  the new cost function becomes:
+  J(theta) = (1/2m)[(summation(i in 1..m)(h(xi)-yi)^2)+(lambda)(summation(j in 1..n)theta-j^2)]
+  thsi will shrink all parameters. also, we will not penalize theta-0, so the second summation is from 1..n
+  we regularize theta-1 to theta-n
+  lambda is the regularization parameter.
+  it controls tradeoff between two different goals. the first goal is captured by the first term above (the usual one)
+  is to fit training data well. the second goal is to keep the parameters small, which is captured by teh regularization term.
+  lambda controls the tradeoff between these two goals. 
+  question at 7:59
+  if we make lambda very large, example 10^10, then all theta-1...theta-n are close to 0, and we are left with essentially
+  h(x) = theta-0 + very little else, so we are left with a constant straight line sort of thing
+  this is an example of underfitting.
+  this hypothesis has a very strong preconception, or high bias, to fit a flat horizontal line
+  for regularization to work well, choose a good choice for lambda,
+  in the next two videos, we will apply regularization to linear regression and logistic regression.
+%pre
+  Set 2 Done!
+%pre
+  Regularization
+  Regularized Linear Regression
+  Previously, two algos, one based on gradient descent, the other based on the Normal Equation.
+  generalize those two to regularized linear regression.
+  previously,
+  repeat: {
+  \ theta-j = theta-j - alpha.1/m.(summation i in 1..m)(h(theta, xi) - y(i))x(j, i)
+  \    for j in 0..n
+  \ theta-0 = theta-0 - alpha.1/m.(summation i in 1..m)(h(theta, xi) - y(i))x(0, i)
+  just write teh update for theta-0 separately
+  }
+  when we modify the algorithm, we will treat theta-0 differetnly since we dont penalize it.
+  Now the above will change to:
+  repeat {
+  \ theta-0 = theta-0 - alpha.1/m.(summation i in 1..m)(h(theta, xi) - y(i))x(0, i)
+  \ theta-0 same as before;
+  \ theta-j = theta-j - alpha.[1/m.(summation i in 1..m)(h(theta, xi) - y(i))x(j, i) + lambda/m.theta-j]
+  \    for j in 1..n
+  }
+  basically, the new way to update the thetas is
+  from the partial derivative wrt the theta of the new regularized cost function.
+  the update can be written equivalently as follows after grouping similar terms:
+  theta-j = theta-j(1-alpha.lambda/m) - (alpha/m)(summation i in 1..m)(h(theta, xi) - y(i))x(j,i)
+  think of 1-alpha.lambda/m as little less than 1, so the iteration has the effect of shrinking theta-j,
+  example theta-j = 0.99.theta-j if 1-alpha.lambda/m is 0.99
+  The other algorithm was Normal equation
+  X = [x(1)' % each row corresponding to a set of training example
+  \    x(2)'
+  \     ...
+  \    x(m)']
+  X is an m by (n+1) dimensional matrix
+  Y = [y(1) y(2) ... y(m)]'
+  Y is m by 1 column vector
+  Theta = (X'X)^(-1)X'Y
+  Now, we are also using regularization, so it will change to
+  so let u be the following matrix:
+  0 0 ...   0
+  0 1 ...   0
+  0 0 1 ... 0
+  \.
+  \.
+  0 0 ...   1
+  u is a n+1 by n+1 dimensional matrix
+  the new Theta then is:
+  Theta = [X'X + lambda times u]^(-1)X'Y
+  lets discuss the noninvertibility issue
+  if m <= n
+  that is, if #examples <= #features
+  in this case, X'X is noninvertible/singular/degenerate
+  if u use pinv in octave, it will kind of do the right thing, but may not give a very good hypothesis
+  fortunately regularization takes care of this, since u can choose lambda such that [X'X+lambda times u] is invertible
+  it is possible to prove that if lambda is greater than 0, the above matrix will not be singular
+
+%pre
+  regularized logistic regression
+  we talked about gradient descent, and also advanced optimization methods previously
+  where we talked of a function that can compute the cost function and the derivatives and using that we
+  can implement logistic regression.
+  it is also prone to overfitting if high order polynomial terms
+  if u have lots of features u can end up with overfitting
+  now the new cost function is:
+  J(theta) = -[1/m.summation(i in 1..m)(y(i)log h(theta, x(i)) + (1-y(i))(log(1-h(theta, x(i)))))] + lambda/2m.summation(j in 1..n)theta-j^2
+  before, our update to theta-j was as follows:
+  repeat {
+  theta-j = theta-j - alpha.(1/m).summation(i in 1..m)(h(theta, x(i)) - y(i))x(j, i)
+  \                                      for j in 0...n
+  write for theta-0 separately from the rest.
+
+  new one
+  repeat {
+  theta-0 = theta-0 - alpha.(1/m).summation(i in 1..m)(h(theta, x(i)) - y(i))x(0, i)
+  theta-j = theta-j - alpha.[(1/m).summation(i in 1..m)(h(theta, x(i)) - y(i))x(j, i) + lambda/m.theta-j]
+  \
+  }                                           for j in 1...n
+  question at 3:54
+  Now coming to Advanced Optimization Methods
+  Now, the updated code is as follows:
+  function [jVal, gradient] = costFunctiona(theta)
+  \  jVal = (theta(1)-5)^2 + (theta(2)-5)^2 + theta(1)^2 + theta(2)^2;
+  \  gradient = zeros(2,1);
+  \  gradient(1) = 4*theta(1)-10;
+  \  gradient(2) = 4*theta(2)-10;
+  \  options = optimset('GradObj', 'on', 'MaxIter', '100'); set GradObj to on, and max number of iterations to 100
+  \  initialTheta = zeros(2,1)
+  \  [optTheta, functionVal, exitFlag] = fminunc(@costFunctiona, initialTheta, options)
+  the answer it returns is 2.5, 2.5 for theta-0, theta-1 respectively.
+  The new cost function is as follows:
+  J(theta) = [-(1/m).summation(i in 1..m){y(i)log h(theta, x(i)) + (1-y(i))(log(1-h(theta, x(i))))}] + lambda/(2.m).summation(j in 1..n)theta-j^2
+  The derivative for theta-0 does not change, for rest it changes:
+  repeat {
+  partial derivative wrt theta-0: 1/m.summation(i in 1..m)(h(theta, x(i))-y(i))x(0,i)
+  partial derivative for others: 
+  \  1/m.summation(i in 1..m)((h(theta, x(i))-y(i))x(j,i)) + lambda/m.theta-j
+  }
+  next, very strong class of non linear classifiers
+  
+  
+  
+  }

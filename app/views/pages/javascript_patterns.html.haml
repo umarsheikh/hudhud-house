@@ -230,4 +230,21 @@ You can override/use properties/methods safely. Tight augmentation implies a set
     \  return my;
     }());
 %h3.green Cloning and Inheritance Pattern
-to be done later... look at http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
+%div
+%pre
+  %code
+
+    var MODULE_TWO = (function(mod){
+    \  var key, that = {};
+    \  for(key in mod){
+    \    if(mod.hasOwnProperty(key){
+    \      that[key] = mod[key];
+    \     }
+    \   }
+    \  var old_meth = mod.module_method;
+    \  that.module_method = function(){
+    \  // has access to parent's method through old_meth
+    \   }
+    \  //...
+    \  return that;
+    }(MODULE_1));
