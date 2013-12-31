@@ -1,0 +1,160 @@
+.event-container#container1.no-publishe
+  %h3 Mouseout, Mouseover, Focus, KeyPress Events
+  :javascript
+    function catchEvent(event){
+      eventSrcId = ((event.target) ? event.target.id : 'undefined');
+      eventType = event.type;
+      status = eventSrcId + " has received " + eventType + " type";
+      document.getElementById("1-status").innerHTML = status;
+    }
+  %div#FIRSTDIV{:style => "height:100px;width:100px;border:1px solid red;padding:5px;", :onclick => "catchEvent(event);", :onmouseover => "catchEvent(event);"}
+    Mouse over me, or click me.
+  %form#MAINFORM{:style => "height:50px:width:200px;background-color:yellow;padding:6px;border:1px solid red;margin-top:2px;", :onmouseout => "catchEvent(event);"}
+    %input#TEXTBOX{type: 'text', onfocus: "catchEvent(event);", onkeypress: "catchEvent(event);"}
+  %div#1-status
+.event-container#container2
+  %h3 Mouseout|Mouseover With To- And From- Element
+  #2-outer-div{style: "width:130px;height:130px;border:1px solid black;background:black;padding:30px;"}
+    #2-inner-div{style: "width:80px;height:80px;border:1px solid black;background:white;padding:20px;"}
+  #2-statusfrom
+  #2-statusto
+  :javascript
+    function showtofrom(event){
+      if(event.type == "mouseover"){
+        var fromElement = event.fromElement || event.relatedTarget;
+        statusdiv1.innerHTML = "from Element " + fromElement.id;
+      }
+      if (event.type == "mouseout"){//for onmouseout event
+        var toElement = event.toElement || event.relatedTarget;
+        statusdiv2.innerHTML = "to Element " + toElement.id;
+      }
+    }
+    var statusdiv1 = document.getElementById("2-statusfrom");
+    var statusdiv2 = document.getElementById("2-statusto");
+    
+    document.getElementById("container2").onmouseover = showtofrom;
+    document.getElementById("container2").onmouseout = showtofrom;
+
+.event-container#container3
+  %h3 Jquery Easings Effect
+  :javascript
+    $(document).ready(function(){
+      $("#container3 #3-runner").click(function(event){
+        $("#container3 .demo").animate({height: "hide", width: "hide"},1500,"linear").animate({height: "show", width: "show"},1500,"linear");
+      });
+      $("#container3 #3-runner2").click(function(event){
+        $("#container3 .demo-2 span.box").animate({"margin-left": "200px"},1500,"linear").animate({"margin-left": "0"},1500,"linear");
+      });
+    });
+  .demo{style: "background-color:#00FF00;width:250px;"}
+    Linear Easing
+  %div
+  %input#3-runner(type="button" value="run")
+  .demo-2{style: "margin-top:15px;"}
+    %span Move me &nbsp;
+    %span.box{style:"background:none repeat scroll 0 0 #FF0000;border-radius:50%;height:10px;padding:5px 10px;width:5px;"}
+    %div
+    %input#3-runner2(type="button" value="Move Ball")
+
+.event-container#container4
+  :javascript
+    $(document).ready(function(){
+      $("#container4 b.me").click(function(event){
+        $("#container4 .change-background").toggle("clip");
+      });
+    });
+
+  %h3 Jquery Toggle Effect
+  %div{style:"position:relative;background:#00ff00;height:340px;"}
+    %div.change-background{style:"position:absolute;top:20px;left:60px;background-color:hotpink;height:300px;width:200px;padding:5px;"}
+    %div{style:"position:absolute;top:20px;left:60px;height:300px;width:200px;padding:5px;"}
+      %h4 Extra Curricular Activities
+      %ul
+        %li President of School Scrabble Society
+        %li Winner of Athletics Gold Medal
+        %li Tae Kwon Do Black Belt
+        %li Gold Medal in 5000m race
+        %li House Captain in School
+      %b.me Click me for better reading
+
+.event-container#container5
+  :javascript
+    $(document).ready(function(){
+      $("#container5 div.box").click(function(){
+        $(this).effect("bounce","slow");
+      });
+      $("#container5 div.exploder-container").click(function(){
+        $("#container5 div.exploder").toggle("explode");
+      });
+      $("#container5 div.folder-container").click(function(){
+        $("#container5 div.folder").toggle("fold");
+      });
+      $("#container5 div.puff-container").click(function(){
+        $("#container5 div.puff").toggle("puff", "800");
+      });
+      $("#container5 div.scale-container").click(function(){
+        $("#container5 div.scale").toggle({effect: "scale", direction: "horizontal"});
+      });
+
+    });
+  %h3 Small Fun Ones!
+  %div.box{style: "background-color:pink;border:1px solid gray; width: 100px; padding:5px;"} Bounce me!
+  %div{style: "height:15px;"}
+  %div.exploder-container{style:"height:50px;border: 1px dashed pink;"}
+    %div.exploder{style: "background-color:pink;border:1px solid gray; width: 100px; padding:5px;"} Explode me!
+  %div.folder-container{style:"height:50px;border: 1px dashed pink;"}
+    %div.folder{style: "background-color:pink;border:1px solid gray; width: 100px; padding:5px;"} Fold me!
+  %div.puff-container{style:"height:50px;border: 1px dashed pink;"}
+    %div.puff{style: "background-color:pink;border:1px solid gray; width: 100px; padding:5px;"} Puff me!
+  %div.scale-container{style:"height:50px;border: 1px dashed pink;"}
+    %div.scale{style: "background-color:pink;border:1px solid gray; width: 100px; padding:5px;"} Scale me!
+
+
+.event-container#containerlast
+  %h3 Jquery Effects (non comprehensive) List
+  %table
+    %tr
+      %td draggable
+      %td droppable
+      %td resizable
+    %tr
+      %td selectable
+      %td sortable
+      %td accordion
+    %tr
+      %td autocomplete
+      %td button
+      %td datepicker
+    %tr
+      %td dialog
+      %td menu
+      %td progressbar
+    %tr
+      %td slider
+      %td spinner
+      %td tabs
+    %tr
+      %td tooltip
+      %td datepicker
+      %td datepicker-pt-BR
+    %tr
+      %td effect.all
+      %td effect
+      %td effect-blind
+    %tr
+      %td effect-bounce
+      %td effect-clip
+      %td effect-drop
+    %tr
+      %td effect-explode
+      %td effect-fade
+      %td effect-fold
+    %tr
+      %td effect-highlight
+      %td effect-pulsate
+      %td effect-scale
+    %tr
+      %td effect-shake
+      %td effect-slide
+      %td effect-transfer
+

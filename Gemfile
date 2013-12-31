@@ -15,5 +15,5 @@ group :development do
   gem 'pry'
 end
 gem 'jquery-rails'
-
+gem 'jquery-ui-rails'
 gem 'haml-rails'
