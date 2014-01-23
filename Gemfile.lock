@@ -98,7 +98,6 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     rake (10.1.0)
-    rdiscount (2.1.7)
     rdoc (3.12.2)
       json (~> 1.4)
     sass (3.2.1)
@@ -140,7 +139,6 @@ DEPENDENCIES
   patron
   pry
   rails (~> 3.2.8)
-  rdiscount
   sass-rails (~> 3.2.3)
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
