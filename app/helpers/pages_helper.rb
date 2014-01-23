@@ -31,6 +31,7 @@ module PagesHelper
   ["Javascript Reference Implementations for Common Patterns", "javascript_patterns"],
   ["Miscellaneous Problems Encountered in Development and Their Solutions", "problem_based_learning"],
   ["Set Up and Configure Postgresql on Ubuntu for Rails Development", "postgres_setup"],
+  ["How to add inline child forms on the parent form in javascript -- Inline Child Forms", "inline_forms"]
   ]
   end
   def needs_work
@@ -39,6 +40,7 @@ module PagesHelper
     #["Salesforce App Development", "salesforce_app"],
     ["List of Personal Projects", "projects_for_development"],
     ["Machine Learning Course Notes", "machine_learning"],
+    ["Machine Learning Exam Prep", "test_preparation_for_machine_learning"],
     ["Octave Installation and Basics for Mathematical Programming", "octave_1"],
     ["Javascript Effects Garden", "javascript_effects"],
     #["Survey of Javascript/Jquery Effects", "js_effects"],

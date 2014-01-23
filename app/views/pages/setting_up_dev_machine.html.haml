@@ -19,4 +19,8 @@ Already installed ubuntu 12, updated, installed php, mysql, apache2, and phpmyad
       %li kate
       %li flashplugin-installer
       %li gstreamer0.10-ffmpeg
-      
+      %li libmysqlclient-dev # otherwise get error related to lmysqlclient, EXAMPLE checking for mysql_query() in -lmysqlclient... no
+
+  %li
+    After forgetting mysql password, do: sudo dpkg-reconfigure mysql-server-5.5 # and enter new password
+    

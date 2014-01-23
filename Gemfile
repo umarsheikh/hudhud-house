@@ -17,3 +17,5 @@ end
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'haml-rails'
+
+gem 'rdiscount' # for require_markdown intializer

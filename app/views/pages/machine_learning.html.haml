@@ -1,3 +1,6 @@
+%pre
+  Working on and Submitting Programming Exercises
+  
 %h3 Classification Problem
 %p
   %pre
@@ -366,16 +369,26 @@ Now back to the discussion:
   sometimes called parameters of the model
   a nerual network is a group of this stuck together
   in a neural network the first layer is called input layer
-  final layer is called the output layer
+  "the layer of x0, x1, x2 etc is layer 1
+  the layer of a(0,2) a(1,2) a(2,2) etc is layer 2
+  and so so
+  a(i,j) is activation of unit i in layer j.
+  Theta(j) where j is in superscript, is the matrix of weights controlling function mapping from layer j to layer j+1 
+  final layer is called the output layer"
   the middle layer layer 2 is called the hidden layer
   neural networks can have more than one hidden layer
   if any layer is not input or outpt layer is called hidden layer
-  a(1, 2) = g(theta(10, 1)x0 + theta(11, 1)x1 + theta(12, 1)x2 + theta(13,1)x3)
+  a(1, 2) = g(theta(10, 1)x0 + theta(11, 1)x1 + theta(12, 1)x2 + theta(13,1)x3) # theta(10,1) is theta of (1st row 0th column of matric) in the first column
+  in the above, a(1, 2) is the activation of unit 1 in layer 2. it depends on theta(1) Theta in superscript, and inputs a(1) where 1 is in superscript.
+  
   a(2,2) = g(theta(20, 1)x0 + theta(21, 1)x1 + theta(22, 1)x2 + theta(23,1)x3)
   a(3,2) = g(theta(30, 1)x0 + theta(31, 1)x1 + theta(32, 1)x2 + theta(33, 1)x3)
   h(theta, x) = a(1,3) = g(theta(10,2)a(0,2) + theta(11,2)a(1,2) + theta(12, 2)a(2,2) + theta(13,2)a(3,2))
   dimension oftheta-1 is 3by4 dimension matric
-  if network has sj units in layer j, s(j+1) units in layer j+1, then theta-j will be of dimendion s(j+1) x (s(j)+1)
+  This video shows the details of the whole neural network model, so it is v good.
+  
+  if network has sj units in layer j, s(j+1) units in layer j+1, then theta-j will be of dimendion s(j+1) x (s(j)+1), where theta-j is theta supescript j
+  
   in artificial neural network, we model as a logistic unit, the yellow circle is the body of the neuron
   we then feed input via input wires or dendrites, and the output wire is called axon in biology
   h(theta, x) = 1/(1+exp(-theta'.x))
@@ -394,18 +407,29 @@ Now back to the discussion:
 
 %pre
   Model Representation 2
+  we will do vectorized implementation, and intuition on why they work.
+  
   forward propagation: vectorized implementation
+  a(i,j) activation of unit i in layer j.
+  theta-j, or theta(,j) or theta(j) where j in superscript is matric od wiehgt from layer j to layer j+1.
+  This is the actual one, theta(10,1) is value in the matrix of weights to take input vector and convert to output of first hidden layer, 2nd row row column 1 (1,0) and matric number 1 from layer 1 to layer 2. that is, matric from layer 1 to layer 2, indexed by (1,0).
   a(1, 2) = g(theta(10, 1)x0 + theta(11, 1)x1 + theta(12, 1)x2 + theta(13,1)x3)
   a(2,2) = g(theta(20, 1)x0 + theta(21, 1)x1 + theta(22, 1)x2 + theta(23,1)x3)
   a(3,2) = g(theta(30, 1)x0 + theta(31, 1)x1 + theta(32, 1)x2 + theta(33, 1)x3)
   h(theta, x) = a(1,3) = g(theta(10,2)a(0,2) + theta(11,2)a(1,2) + theta(12, 2)a(2,2) + theta(13,2)a(3,2))
-  let a(1,2) = g(z(1,2)
+  let a(1,2) = g(z(1,2))
   a(2,2) = g(z(2,2))
   a(3,2) = g(z(3,2))
   X = [x0 ... x3]
   Z(2) = [z(1,2) z(2,2) z(3,2)]
-  z(2) = theta(1)x
+  similarly, denote the whole vector of outputs of hiden layer as a(2) where 2 in superscript. so a(x) = g(z(2)).
+  
+  
+  z(2) = theta(1)X
   a(2) = g(z(2))
+  
+  The above is the vectorized implementation.
+  
   a(2) and z(2) in the above are 3-dim vectors
   we can also define a(1) as X, that is, a(1) is the first column which is of inputs, so 
   z(2) = theta(1)a(1) as a(1) = X, the input vector
@@ -421,7 +445,199 @@ Now back to the discussion:
   itself, into logistic regression. so in one sense it learns better features to feed to logistic regression than the features
   that were originally given.
   there can be other neural network architectures
+  
+  Now, in the actual model, that is in the vectorized implementation, we also add an extra term a(0,2) which is always 1.
+  so z(,3) = Theta(,2)a(,2)
+  h(theta,x) = a(,3) = g(z(,3))
+  after adding a(0,2) the a(,2) is in R4 instead of R3.
+  This method of computing h from x is called "forward propagation"
 %pre
   Examples and Intuitions 1
   Do this again, so no notes this time
+  x1 and x2 can take values 0 or 1.
+  non linear classification example: xor xnor
+  y = x1 xor x2
+  x1 xnor x2
+  not(x1 xor x2)
+  another example: x1, x2 in {0,1}
+  compute x1 AND x2
+  draw the bias unit as well, the +1 unit.
+  +1 with -30, x1 with +20, x2 with +20
+  compute h(theta, x) = g(-30 + 20x1 + 20x2)
+  g(-30) v close to 0
+  if one of htem is 1, then again g(-10) v close to 0
+  if both are 1, then g(10) v close to 1
+  so this is the AND function of x1 and x2
+  
+%pre
+  Examples and Intuition 2 from the downloaded ones
+  negation.
+  Not x1.
+  input is x1. bias unit is +1
+  g(10 - 20x1)
+  to do negation, the general idea is to use a large negative value.
+  x1 and x2: (-30, 20, 20)
+  x1 or x2: (-10, 20, 20)
+  not x1: (10, -20)
+  not x1 and not x2: (10, -20, -20)
+  
+%pre
+  Multiclass classification
+  it is basically an extension of one vs all, if there are ten classes the output has 10 components, so it is a 10-dim object.
+  hand digit recognition is an example
+  is it a picture of a pedeestrian or a truck or a car (computer vision example)
+  this is done with multiple output units: one vs all
+  the output is a vector of 4 numbers
+  the first output is pedestrian, the second a car(yes or no?) teh third a truck (yes or no?) and so on
+  we want if pedestrian output should be [1 0 0  0] and so on.
+  training set is (x1,y1) or (x(,1),y(,1)), (x2,y2),(x3,y3),...,(xm,ym)
+  previously yi was in {1,2,3,4}, now y(i) is one of [1 0 0 0] [0 1 0 0] [0 0 1 0] [0 0 0 1]
+  depending on which of pedestrain, car, truck, motorbike the image is.
+  we want to design neural network weights so that h(theta, xi) is approx equal = to yi
+  the next video is on: how to automatically learn the parameters of the neural network, that is, the thetas in each layer
+  how to given a training set, do the above.
+
+%pre
+  Cost Function
+  use the same cost function as in logistic regression, normalize over all thetas except theta-0 in each layer. next video on how to optimize the cost function.
+  talk about the cost function for fitting the parameters of the neural network.
+  L = toatl number of layers
+  sl, or s_l: no of units (not counting bias unit) in layer l, so s(l) as well.
+  input layer is layer 1.
+  Training set: pair of (xi,yi) values, that is, given an input xi, what should be the output yi
+  there are two types of classification problems we will cosnider: one is binary classification, output is 0 or 1, the other is multiclass
+  classification, where output is [1 0 0 0 ] etc.
+  in the multiclass case, the output is in RK, where K is the number of classes to detect.
+  The cost function of the neural network is a generalization of the one for logistic regression
+  logistic regression:
+  J(theta) = (-1/m).[summation(i in 1..m)(yi.log(h(theta, xi)) + (1-yi).log(1-h(theta, xi)))] + (lambda/m).summation(j in 1..n)(theta-j ^ 2)
+  in the above, we dont regularoze on theta-0, therefor j starts from 1..n
+  for nn, our cost funciton is generalization,	
+  termonology:
+  h(theta, x) is in Rk, if it is a k-classification problem,
+  h(theta, x)_i is the ith output of the output vector, we can denote it other way: (h(theta, x) sub i) 
+  The actual nn cost function is below, basically it is the same as above but also summed over the K output units.
+  The next video is on how to optimize the cost function.
+
+%pre
+  Back Propagation Algorithm
+  todo
+  minimize the cost function is the goal
+  given theta we need code to compute J(theta), and the partial derivatives: (d J(theta))/(d theta(ij, l))
+  Lets talk about if we have only one training example, that is, one (xi,yi)
+  Question is, how to compute gradient?
+  what is the sequence of calculations we will do with this one training example?
+  first step: do forward propagation to compute each of teh a's in all layers, as well as the output.
+  here it is:
+  a(1) = x
+  z(2) = theta(1)a(1)
+  a(2) = g(z(2)) (add a(0,2))
+  z(3) = theta(2)a(2)
+  a(3) = g(z(3)) add a(0,3)
+  z(4) = theta(3)a(3)
+  a(4) = g(z(4))
+  which isthe final output
+  corresponding to 2 hidden layers, 1 input and one output layer with 4 outputs, so total of 4 layers
+  In order to compute derivatives, we will use algorithm called backpropagation.
+  the intuition is, for each node we will compute delta(j,l) which is error of node j in layer l.
+  delat(j,l) = error of node j in layer l
+  For each output unit in layer L = 4 in the example
+  compute
+  delta(j,4) = a(j,4) - y(j)
+  a(j,4) can also be written as h(theta, x)_j for the jth value of the vector h(theta, x)
+  vectorized implementation is
+  delat(4) = a(,4) - y
+  where each term above is vector
+  next, compute delta terms for the earlier layers like so:
+  delta(3) = (Theta-3)T.delta(4).*g'(z(3)) # where .* is the element wise multiplication
+  delta(2) = (Theta-2)T.delta(3).*g'(z(2))
+  In the above, z(3) = a(3).*(1-a(3)) and so on from calculus
+  No delta(1) term
+  we only have delta terms for layers 2,3,4 in the example
+  It is also possible to prove that: if the lambdas are all 0, that is, no regularization, then
+  (d j(theta))/(d theta(ij,l)) = a(j,l)delta(i, l+1)
+  Next, what happens when we have a large training set?
+  suppose we have m examples in training set: {(x1,y1),(x2,y2),..,(xm,ym)}
+  set Delta(ij,l) = 0 for all values of i,j,l # this is upper case delta
+  eventually the Delta(ij,l) will be used to compute the partial terms d/dtheta(ij,l) of J(theta)
+  For i in 1..m do
+  \ set a(1) = x(i)
+  \ perform forward propagation to compute a(l) for l=2,3,...,L
+  \ Using y(i), compute delta(L) = a(L)-y(i)
+  \ Compute delta(L-1), delta(L-2),..., delta(2)
+  \ Delta(ij,l) = = Delta(ij,l) + a(j,l)delta(i,l+1)
+  end
+  The last line above, can be written in matrix form as follows:
+  Delta(l) = Delta(l) + delta(l+1).(a(l)T)
+  Using the above, compute:
+  D(ij,l) = (1/m)Delta(ij,l)) + lambda.Theta(ij,l) if j not equal to 0
+  D(ij,l) = (1/m)Delta(ij,l)) if j equal to 0 # this corresponds to the bias term
+  it is possible to show that:
+  D(ij,l) = d/d(Theta(ij,l)) of J(Theta)
+  
+  
+%pre
+  Backpropagation Intuition
+  J(Theta) = cost function = -(1/m).[sum(i in 1..m)sum(k in 1..K){y(k,i)log h(theta, x(i))_k + (1-y(k,i))log(1-h(theta, x(i))_k) }]+(lambda/2m).[summation(l in 1..L-1)summation(i in 1..s(l))summation(j in 1..s(l)+1))(Theta(ji,l)^2)]
+  the second term which sums over thetas, dont sum over the bias values
+  so dont sum over i=0
+  Want minimum J(Theta)
+  Need to compute
+  - J(Theta)
+  - (d/(d(theta(ij, l))))J(Theta)
+  Input layer is layer 1, second layer is layer 2, and so on.
+  mechanical steps intuition
+  
+%pre
+  Implementation Note: Unrolling parameters
+  todo
+%pre
+  Gradient Checking
+  Backpropagation can have many errors, and cost function may end up decreasing despite bugs
+  can have high level of errors
+  there is an idea called gradient checking that eliminates some errors
+  it eliminates all problems
+  this also ensures the derivatives are right
+  numerical estimation of gradients
+  set epsilon to 10^-4
+  we do the 2-sided difference, so (theta+eps - theta-eps), instead of (theta+eps-theta)
+  parameter vector theta
+  d/dtheta-1 of J(theta) = J(theta1 + eps, theta2, ..., theta-n) - J(theta1 - eps, theta2, ..., theta-n)/(2.eps)
+  and so on
+  d/dtheta-n of J(theta) = J(theta1, theta2, ..., theta-n + eps) - J(theta1, theta2, ..., theta-n - eps)/(2.eps)
+  and so on
+  so we implement the following octave code:
+%pre
+  for i = 1:n;
+  \  thetaPlus = theta;
+  \  thetaPlus(i) = thetaPlus(i) + EPSILON; % that is: [theta-1 theta-2 ... theta-i+eps ... theta-n]
+  \  thetaMinus = theta;
+  \  thetaMinus(i) = thetaMinus(i) - EPSILON;
+  \  gradApprox(i) = (J(thetaPlus)-J(thetaMinus))/(2*EPSILON);
+  end
+%pre
+  next, check that gradApprox is approx equal to DVec from backprop.
+  if yes, swithc off gradient checking and use the DVec backprop for learning
+  gradient checking is slow, so turn it off
+%pre
+  Random Initialization
+  need to pick iniital value of theta
+%pre
+  optTheta = fminunc(@costFunction, initialTheta, options)
+%pre
+  do we set initialTheta = zeros(n,1)?
+  the above works for logistic regression, but not for nn
+  after each update, parameters corresponding to inputs going into each of two hidden units are identical.
+  a(1,2) = a(2,2)
+  delta(1,2) = delta(2,2)
+  d/d theta(01, 1) = d/d theta(02, 1)
+  and so on
+  so the blue weights are the same, the green weights are the same and so on
+  This problem is called the problem of symmetric wieghts
+  initialize theta(ij,l) to a random value is (-eps,eps)
+%pre
+  Theta1 = rand(10,11)*(2*INIT_EPSILON)-INIT_EPSILON; % rand(10,11) is a 10 by 11 matrix each value between 0 and 1 randomly
+  Theta2 = rand(1,11)*(2*INIT_EPSILON)-INIT_EPSILON;
+%pre
+  so this is called symmetry breaking
   

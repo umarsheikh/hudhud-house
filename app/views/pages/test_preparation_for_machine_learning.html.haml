@@ -1,0 +1,81 @@
+%h2 Machine learning Test Questions
+
+%h5 Task for today
+  %i In order to fill out the questionnaire more for today, review the screencast on logistic regression.
+
+%h3 How many types of machine learning problems are there?
+%ol
+  %li Yes/no: Is the tumor cancerous or not?
+  %li Finding the best fit for house price with respect to size, location, and other input features.
+  %li One vs all: is the picture a car, bike, truck, pedestrian?
+%h3 For each type of machine learning problem, how many broad categories of solution algorithms are there?
+%ol
+  %li
+    Regression Problem
+  %li
+    Classification Problem
+%ol
+  %li 
+    Yes/no decision problems.
+    %ul
+      %li Linear regression.
+      %li Neural networks.
+  %li 
+    House price prediction. Regression model
+    %ul
+      %li Input features can employ quadratic, cubic terms. Then use linear regression all over again.
+      %li 
+  %li 
+    One vs all
+    %ul
+      %li
+  %li 
+    Multi class Classification
+    %ul
+      %li
+
+%h3 What are the predicted functions that we calculate the coefficients of, for each type of machine learning problem?
+%p
+  One is: Output h(theta, x) = Theta-0.x0 + Theta-1.x1 + Theta-2.x2
+%p
+  In the above, x0 may be the bias unit, which is always 1. It is inserted simply so that Theta-0 gets multiplied by an input, so that the whole expression can be easily vectorized. the above assumes that the output is a linear function of the inputs.
+%p
+  In another model, we guess that the output is a function of quadratic terms as well.
+%p
+  Output h(theta, x) = Theta-0.x0 + Theta-1.x1 + Theta-2.x2 + Theta-3.x1.x2 + Theta-4.x1^2 + Theta-5.x2^2
+%p
+  Again, x0 is always 1 in the above case, as explained earlier. Output is computed based on linear and quadratic terms of the input. We again need to compute the values of Theta that minimize the cost function. We can employ either the gradient descent or compute exact values using Vectorized implementation of the above function.
+%p
+  In this model, we assume that the input-output relation is governed by the following function:
+%p
+  Output h(theta, x) = 1/(1+exp(-Theta-T.X)), wehre Theta-T is the transpose of Theta.
+%p
+  In the above case, we usually guess that the output depends linearly on input X, so that there are only linear terms, but the output also depends on an exponential function. In other words, if we expand the above out, we may get:
+%p
+  h(theta, [x0=1 x1 x2]) = 1/(1+exp(-[theta-0 theta-1 theta-2].[1 x1 x2]T))
+%p
+  As you can see, output depends on x0, x1, x2, theta-0, theta-1, theta-2, but not on x1^2, x2^2 etc. However if you expand the above out, you may get those terms using taylor or other expansion methods, but that may be out of the scope of this discussion.
+
+%p
+  In neural networks, the output is an exponential function of an exponential function of an exponential funcction of ... of the inputs. If we denote the exponential function described above as g(z), we usually write it as follows:
+%p
+  Suppose that the neural network comprises of the input layer, an intermediate hidden layer, and an output layer. Further, the input layer has 3 inputs including the bias unit[x0=1 x1 x2], the hidden layer has 4 units including the bias unit[a0=1 a1 a2 a3], and the output has 2 units[h0 h1]. We can express it as follows:
+%div
+  WRITE THEM LATER.
+  
+%h3 What are the cost functions of each type of machine learning problem, in each category of solution?
+
+%p
+  Cost function for linear regression is **sum of squared errors of (prediction - actual) in case of each output value we know.** Our goal is to minimize this cost function. We minimize it using either approximate technique like gradient descent, or we find the mathematical minimum using linear algebra, employing pseudo inverses/inverses/transposes of matrices wherever applicable.
+  %p
+    the matrix we set up is: X.Theta = Y, XT.X.Theta = XT.Y, (XT.X)^-1.(XT.X).Theta = (XT.X)^-1.XT.Y, Theta = (XT.X)^-1.XT.Y
+  %p
+    As can be seen from the above vectorized implementation of Linear Regression, we can get exact values of Theta that minimize the cost function globally by the above computation.
+%h3 What are the pros of each type of solution?
+%h3 What are the cons of each type of solution?
+%h3 What is the expression for vectorized implementation of each type of solution?
+%h3 What are the main assumptions in each model, especially with respect to the bias unit?
+%h3 Which algorithms employ the bias unit, and which algorithms dont?
+%h3 Is the indexing in the different algorithms based on 0 or 1, with respect to inputs?
+%h3 Is the indexing in the different algorithms based on 0 or 1, with respect to outputs?
+

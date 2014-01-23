@@ -1,0 +1,18 @@
+%ul
+  %li
+    typically X = a column vector. Adding ones to take care of theta-0 corresponds to inserting a column of 1's to the left of X, thus making X into a m*2 matrix, where the first column is all ones, the second column is the X values. You then multiple it by theta-vector, which is also a column vector.
+  %li
+    for gradient descent, inner loop to update theta, use vectorized implementation instead of looping on theta-j for each j,
+    and this is covered in "Vectorization".
+  %li
+    In programming, adding input 1 to X is like "coordinate lifting"; if data is 1-d, it becomes 2-d, if n-d, it becomes n+1-d and so on
+  %li
+    Linear regression exercises are done.
+%ul
+  %li
+    Exercise 2
+  %li
+    Looks like we need to extract the y=1 values and y=0 values, and then plot the y=1 values in a diff color and marker and so on. basically a find(condition) followed by feeding the indices into two plot functions
+  %li
+    exercice one is a good one on plotting data, refer to it.
+  
