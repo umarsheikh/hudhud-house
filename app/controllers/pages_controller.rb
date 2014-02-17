@@ -2,6 +2,8 @@ class PagesController < ApplicationController
   include PagesHelper
   def main
   end
+  def main2
+  end
   def portfolio
     @type = params[:id]
   end
@@ -17,7 +19,7 @@ class PagesController < ApplicationController
 
   def blog
     id = params[:id]
-    (render :template => "pages/#{id}" if (all_blogs.values.flatten).include?(params[:id])) and return
+    (render( {:template => "pages/#{id}", :layout => "book"}) if (all_blogs.values.flatten).include?(params[:id])) and return
   end
   def aboutus
   end

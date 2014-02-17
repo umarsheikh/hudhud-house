@@ -5,6 +5,7 @@ HudhudHouse::Application.routes.draw do
   get "aboutus" => "pages#aboutus"
   get "contact" => "pages#contact"
   get "pages/main"
+  get "pages/main2"
   match "mongo-rails-backbone-setup" => 	"pages#mongo_rails_backbone_setup", :as => :mongo_rails_backbone_setup
   match "pages/portfolio/:id" => "pages#portfolio", :as => :portfolio
   root :to => "pages#main"

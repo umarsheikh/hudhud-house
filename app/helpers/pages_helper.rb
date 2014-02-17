@@ -26,6 +26,24 @@ module PagesHelper
       :needs_work => needs_work
     }
   end
+  def render_index
+    x = detailed
+    y = needs_work
+    x = x + y
+    links = []
+    x.each do |title, filepath|
+      classes = "left-link"
+      classes += " highlight" if filepath.match(/#{params[:id]}/i) && params[:id].present?
+      links << "<li>" + link_to(title, blog_path(filepath), :class => classes ) + "</li>"
+    end
+    ("<ol>" + links.join + "</ol>").html_safe
+  end
+  def render_right_panel
+    classes = "right-link"
+      classes += " highlight" if our_location_path.match request.fullpath
+ 
+    ("<ul>" + link_to("Our Location", our_location_path, :class => classes) + "</ul>").html_safe
+  end
   def detailed
   [["How to Learn Javascript - A Short Course Outline", "javascript_course_outline"],
   ["Javascript Reference Implementations for Common Patterns", "javascript_patterns"],
