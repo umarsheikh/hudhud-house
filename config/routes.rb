@@ -2,7 +2,8 @@ HudhudHouse::Application.routes.draw do
   match "site_scraper/*id" => "site_scraper#index", :as => :site, :id => /.+/
 
   get "location/where_we_are", :as => :our_location
-
+  get "aboutus" => "pages#aboutus"
+  get "contact" => "pages#contact"
   get "pages/main"
   match "mongo-rails-backbone-setup" => 	"pages#mongo_rails_backbone_setup", :as => :mongo_rails_backbone_setup
   match "pages/portfolio/:id" => "pages#portfolio", :as => :portfolio

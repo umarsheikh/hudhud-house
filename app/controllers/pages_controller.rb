@@ -19,5 +19,7 @@ class PagesController < ApplicationController
     id = params[:id]
     (render :template => "pages/#{id}" if (all_blogs.values.flatten).include?(params[:id])) and return
   end
+  def aboutus
+  end
 
 end
