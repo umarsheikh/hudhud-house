@@ -1,0 +1,57 @@
+%h2 Chapter 1
+%h3 Due Date Calculations for Monthly/Periodic Payments
+
+%div
+  A user subscribes on any day, and then he needs to be charged every x days, where x is configurable.
+  One wants to be able to charge him every 5 days, or every 10 days, or any given number of days.
+  Every invoice records in how many days the user will be charged, and we need to calculate due dates on invoices
+  using this rule.
+  
+%div
+  In another scenario, a user signs up on any particular day, and then we need to charge him on the xth of every month.
+  This is not like the above case, since we may want to always charge him on the 5th of a month. If the current month is
+  January then the user will be charged after 31 days, whereas if the month is February, the user will be charged either after 28 days, or 29 days depending on leap year. We want to make sure that the user is charged on the same day every month.
+  
+%div
+  Associated with the latter case above, there is a typical requirements that if the user subscribes within the first few days of the due date, then we can skip charging him for the first month of use, since he would have used the plan for only a very limited number of days. So let's say, we want to charge on the 30th of every month, but if the user has signed up later than 20th, then we want to charge him starting next month, and skip the first due date.
+
+
+The code for the first scenario is quite easy. Here it is:
+
+%pre
+  %code
+    due_date = invoice.creation_date + invoice.every_x_days
+
+The code for the second scnenario is more complicated than above. It needs to be aware of the following things:
+%ul
+  %li Variable number of month days
+  %li If the invoice wants to be charged every 31st, then it needs to charge on the 30th of a month with 30 days
+  %li Skipping of days has to be handled carefully
+
+Here is the code for the above scenario:
+
+%pre
+  %code
+    creation_date = invoice.creation_date
+    day, month, year = creation_date.day, creation_date.month, creation_date.year
+    if day < due_date_day # the first due date is potentially this month
+    \  max_day = creation_date.end_of_month.day
+    \  if due_date_day < max_day
+    \    final_date = Date.parse("\#{due_date_day}-\#{month}-\#{year}")
+    \  else
+    \    final_date = Date.parse("\#{max_day}-\#{month}-\#{year}")
+    \  end
+    else # the due date is next month
+    \  next_month_date = creation_date + 1.month # this will be in the next month
+    \  d, m, y = next_month_date.day, next_month_date.month, next_month_date.year
+    \  max_day = next_month_date.end_of_month.day
+    \  if due_date_day < max_day
+    \    final_date = Date.parse("\#{due_date_day}-\#{m}-\#{y}")
+    \  else
+    \    final_date = Date.parse("\#{max_day}-\#{m}-\#{y}")
+    \  end
+    end
+    final_date = final_date + 1.month if (final_date - creation_date < skip_x_days)
+    if final_date.day != due_date_day && due_date_day < final_date.end_of_month.day
+    \  final_date = Date.parse("\#{due_date_day}-\#{final_date.month}-\#{final_date.year}")
+    end
