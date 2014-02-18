@@ -28,13 +28,17 @@ module PagesHelper
   end
   def render_index
     x = detailed
-    y = needs_work
-    x = x + y
+    y = needs_work if params[:complete_index]
+    x = x + y if y
     links = []
     x.each do |title, filepath|
       classes = "left-link"
       classes += " highlight" if filepath.match(/#{params[:id]}/i) && params[:id].present?
-      links << "<li>" + link_to(title, blog_path(filepath), :class => classes ) + "</li>"
+      if params[:complete_index]
+        links << "<li>" + link_to(title, blog_path(filepath, :complete_index => true), :class => classes ) + "</li>"
+      else
+        links << "<li>" + link_to(title, blog_path(filepath), :class => classes ) + "</li>"
+      end
     end
     ("<ol>" + links.join + "</ol>").html_safe
   end
